@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Store - Registro de Usuario</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-box">
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="Steam Store Logo" class="brand-logo">
+                </a>
+            </div>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <a href="login.html" class="auth-link">Iniciar sesión</a>
+                <span class="divider">|</span>
+                <a href="registro.html" class="auth-link active">Registrar usuario</a>
+                <a href="carrito.html" class="cart-button">
+                    🛒 Carrito (<span id="header-cart-count">0</span>)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="auth-main">
+        <div class="auth-card register-card">
+            <div class="auth-header">
+                <h2>Crear Cuenta de Usuario</h2>
+                <p>Completa el formulario con tus datos para comprar y gestionar tus juegos.</p>
+            </div>
+
+            <form id="form-registro" class="form-standard" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-run">RUN (Sin puntos ni guión) *</label>
+                        <input 
+                            type="text" 
+                            id="reg-run" 
+                            name="run" 
+                            placeholder="Ej: 19011022K" 
+                            minlength="7" 
+                            maxlength="9" 
+                            required>
+                        <small class="error-msg" id="error-reg-run"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-fecha-nacimiento">Fecha de Nacimiento</label>
+                        <input 
+                            type="date" 
+                            id="reg-fecha-nacimiento" 
+                            name="fechaNacimiento">
+                        <small class="error-msg" id="error-reg-fecha-nacimiento"></small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-nombre">Nombre *</label>
+                        <input 
+                            type="text" 
+                            id="reg-nombre" 
+                            name="nombre" 
+                            placeholder="Tu nombre" 
+                            maxlength="50" 
+                            autocomplete="given-name"
+                            required>
+                        <small class="error-msg" id="error-reg-nombre"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-apellidos">Apellidos *</label>
+                        <input 
+                            type="text" 
+                            id="reg-apellidos" 
+                            name="apellidos" 
+                            placeholder="Tus apellidos" 
+                            maxlength="100" 
+                            autocomplete="family-name"
+                            required>
+                        <small class="error-msg" id="error-reg-apellidos"></small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reg-email">Correo Electrónico *</label>
+                    <input 
+                        type="email" 
+                        id="reg-email" 
+                        name="email" 
+                        placeholder="ejemplo@duoc.cl / @gmail.com" 
+                        maxlength="100" 
+                        autocomplete="email"
+                        required>
+                    <small class="error-msg" id="error-reg-email"></small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-password">Contraseña *</label>
+                        <input 
+                            type="password" 
+                            id="reg-password" 
+                            name="password" 
+                            placeholder="Entre 4 y 10 caracteres" 
+                            minlength="4" 
+                            maxlength="10" 
+                            autocomplete="new-password"
+                            required>
+                        <small class="error-msg" id="error-reg-password"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-confirm-password">Confirmar Contraseña *</label>
+                        <input 
+                            type="password" 
+                            id="reg-confirm-password" 
+                            name="confirmPassword" 
+                            placeholder="Repite tu contraseña" 
+                            minlength="4" 
+                            maxlength="10" 
+                            autocomplete="new-password"
+                            required>
+                        <small class="error-msg" id="error-reg-confirm-password"></small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-telefono">Teléfono (Opcional)</label>
+                        <input 
+                            type="tel" 
+                            id="reg-telefono" 
+                            name="telefono" 
+                            placeholder="+56 9 1234 5678" 
+                            autocomplete="tel">
+                        <small class="error-msg" id="error-reg-telefono"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-region">Región *</label>
+                        <select id="reg-region" name="region" required>
+                            <option value="">-- Selecciona una región --</option>
+                            <option value="metropolitana">Región Metropolitana de Santiago</option>
+                            <option value="araucania">Región de la Araucanía</option>
+                            <option value="nuble">Región de Ñuble</option>
+                        </select>
+                        <small class="error-msg" id="error-reg-region"></small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reg-comuna">Comuna *</label>
+                        <select id="reg-comuna" name="comuna" required>
+                            <option value="">-- Selecciona una comuna --</option>
+                            <option value="santiago">Santiago</option>
+                            <option value="concepcion">Concepción</option>
+                            <option value="linares">Linares</option>
+                        </select>
+                        <small class="error-msg" id="error-reg-comuna"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-direccion">Dirección *</label>
+                        <input 
+                            type="text" 
+                            id="reg-direccion" 
+                            name="direccion" 
+                            placeholder="Calle, número, depto" 
+                            maxlength="300" 
+                            autocomplete="street-address"
+                            required>
+                        <small class="error-msg" id="error-reg-direccion"></small>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="btn-submit-registro">Registrar Cuenta</button>
+
+                <div class="auth-footer-text">
+                    <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión</a></p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Steam Store Project</h4>
+                <p>Plataforma académica de distribución digital desarrollada para DSY1104.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="productos.html">Catálogo</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="blogs.html">Noticias y Actualizaciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Soporte & Panel</h4>
+                <ul>
+                    <li><a href="contacto.html">Contacto / Soporte</a></li>
+                    <li><a href="../admin/index.html">Panel de Administración</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Steam Store Project. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../js/validations.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

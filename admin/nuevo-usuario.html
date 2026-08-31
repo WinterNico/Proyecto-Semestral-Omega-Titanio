@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Admin - Formulario Usuario</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/img/logo.png" alt="Steam Logo" class="admin-logo">
+                <h2>Panel Admin</h2>
+            </div>
+            <nav class="admin-nav" aria-label="Menú de administración">
+                <ul>
+                    <li><a href="index.html">📊 Dashboard</a></li>
+                    <li><a href="productos.html">🎮 Productos</a></li>
+                    <li><a href="usuarios.html" class="active">👥 Usuarios</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="../index.html" target="_blank">🌐 Ir a la Tienda</a></li>
+                    <li><a href="../pages/login.html">🚪 Cerrar Sesión</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-topbar">
+                <div class="topbar-title">
+                    <h1 id="user-form-title">Registrar Usuario en Sistema</h1>
+                    <p>Asigna roles y credenciales de acceso para la tienda o el panel administrativo.</p>
+                </div>
+                <a href="usuarios.html" class="btn btn-secondary">&larr; Volver al Listado</a>
+            </header>
+
+            <section class="admin-content">
+                <div class="form-container-card">
+                    <form id="form-admin-usuario" class="form-standard" novalidate>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="admin-user-run">RUN (Sin puntos ni guión) *</label>
+                                <input 
+                                    type="text" 
+                                    id="admin-user-run" 
+                                    name="run" 
+                                    placeholder="Ej: 19011022K" 
+                                    minlength="7" 
+                                    maxlength="9" 
+                                    required>
+                                <small class="error-msg" id="error-admin-user-run"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="admin-user-rol">Tipo de Usuario (Rol) *</label>
+                                <select id="admin-user-rol" name="rol" required>
+                                    <option value="">-- Selecciona un rol --</option>
+                                    <option value="Administrador">Administrador (Acceso Total)</option>
+                                    <option value="Vendedor">Vendedor (Productos y Órdenes)</option>
+                                    <option value="Cliente">Cliente (Solo Tienda)</option>
+                                </select>
+                                <small class="error-msg" id="error-admin-user-rol"></small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="admin-user-nombre">Nombre * (Máx. 50)</label>
+                                <input 
+                                    type="text" 
+                                    id="admin-user-nombre" 
+                                    name="nombre" 
+                                    placeholder="Nombre del usuario" 
+                                    maxlength="50" 
+                                    required>
+                                <small class="error-msg" id="error-admin-user-nombre"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="admin-user-apellidos">Apellidos * (Máx. 100)</label>
+                                <input 
+                                    type="text" 
+                                    id="admin-user-apellidos" 
+                                    name="apellidos" 
+                                    placeholder="Apellidos del usuario" 
+                                    maxlength="100" 
+                                    required>
+                                <small class="error-msg" id="error-admin-user-apellidos"></small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="admin-user-email">Correo Electrónico *</label>
+                                <input 
+                                    type="email" 
+                                    id="admin-user-email" 
+                                    name="email" 
+                                    placeholder="@duoc.cl / @profesor.duoc.cl / @gmail.com" 
+                                    maxlength="100" 
+                                    required>
+                                <small class="error-msg" id="error-admin-user-email"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="admin-user-fecha-nacimiento">Fecha de Nacimiento (Opcional)</label>
+                                <input 
+                                    type="date" 
+                                    id="admin-user-fecha-nacimiento" 
+                                    name="fechaNacimiento">
+                                <small class="error-msg" id="error-admin-user-fecha-nacimiento"></small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="admin-user-region">Región *</label>
+                                <select id="admin-user-region" name="region" required>
+                                    <option value="">-- Selecciona una región --</option>
+                                    <option value="metropolitana">Región Metropolitana de Santiago</option>
+                                    <option value="araucania">Región de la Araucanía</option>
+                                    <option value="nuble">Región de Ñuble</option>
+                                </select>
+                                <small class="error-msg" id="error-admin-user-region"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="admin-user-comuna">Comuna *</label>
+                                <select id="admin-user-comuna" name="comuna" required>
+                                    <option value="">-- Selecciona una comuna --</option>
+                                    <option value="santiago">Santiago</option>
+                                    <option value="concepcion">Concepción</option>
+                                    <option value="linares">Linares</option>
+                                </select>
+                                <small class="error-msg" id="error-admin-user-comuna"></small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="admin-user-direccion">Dirección Completa * (Máx. 300 caracteres)</label>
+                            <input 
+                                type="text" 
+                                id="admin-user-direccion" 
+                                name="direccion" 
+                                placeholder="Avenida / Calle, Número, Depto" 
+                                maxlength="300" 
+                                required>
+                            <small class="error-msg" id="error-admin-user-direccion"></small>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="btn-save-user">Guardar Usuario</button>
+                            <a href="usuarios.html" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/validations.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

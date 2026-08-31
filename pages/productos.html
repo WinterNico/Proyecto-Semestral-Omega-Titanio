@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Store - Catálogo de Productos</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-box">
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="Steam Store Logo" class="brand-logo">
+                </a>
+            </div>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="productos.html" class="active">Productos</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <a href="login.html" class="auth-link">Iniciar sesión</a>
+                <span class="divider">|</span>
+                <a href="registro.html" class="auth-link">Registrar usuario</a>
+                <a href="carrito.html" class="cart-button">
+                    🛒 Carrito (<span id="header-cart-count">0</span>)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="catalog-main">
+        <div class="catalog-header">
+            <h1>Catálogo de Juegos</h1>
+            <p>Explora todos los títulos disponibles en nuestra biblioteca digital.</p>
+        </div>
+
+        <!-- Contenedor con lista de productos -->
+        <section class="catalog-section">
+            <div class="catalog-grid" id="catalog-container">
+                
+                <article class="game-card">
+                    <img src="/assets/img/mhwilds2.jpg" alt="Monster Hunter Wilds" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">Monster Hunter Wilds</h3>
+                        <p class="card-category">Acción / Caza</p>
+                        <div class="card-footer">
+                            <span class="card-price">$39.990</span>
+                            <div class="card-actions">
+                                <a href="detalle-producto.html" class="btn btn-sm">Detalle</a>
+                                <button type="button" class="btn btn-sm btn-primary btn-add-cart" data-id="1" data-name="Monster Hunter Wilds" data-price="39990">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card">
+                    <img src="https://placehold.co/300x180/1b2838/ffffff?text=Marvel+Rivals" alt="Marvel Rivals" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">Marvel Rivals</h3>
+                        <p class="card-category">Hero Shooter</p>
+                        <div class="card-footer">
+                            <span class="card-price">Gratis</span>
+                            <div class="card-actions">
+                                <a href="detalle-producto.html" class="btn btn-sm">Detalle</a>
+                                <button type="button" class="btn btn-sm btn-primary btn-add-cart" data-id="2" data-name="Marvel Rivals" data-price="0">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card">
+                    <img src="https://placehold.co/300x180/1b2838/ffffff?text=DB+Sparking+Zero" alt="Dragon Ball Sparking Zero" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">DB: Sparking! ZERO</h3>
+                        <p class="card-category">Lucha / Anime</p>
+                        <div class="card-footer">
+                            <span class="card-price">$45.990</span>
+                            <div class="card-actions">
+                                <a href="detalle-producto.html" class="btn btn-sm">Detalle</a>
+                                <button type="button" class="btn btn-sm btn-primary btn-add-cart" data-id="3" data-name="DB: Sparking! ZERO" data-price="45990">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card">
+                    <img src="https://placehold.co/300x180/1b2838/ffffff?text=Cyberpunk+2077" alt="Cyberpunk 2077" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">Cyberpunk 2077</h3>
+                        <p class="card-category">RPG / Mundo Abierto</p>
+                        <div class="card-footer">
+                            <span class="card-price">$29.990</span>
+                            <div class="card-actions">
+                                <a href="detalle-producto.html" class="btn btn-sm">Detalle</a>
+                                <button type="button" class="btn btn-sm btn-primary btn-add-cart" data-id="4" data-name="Cyberpunk 2077" data-price="29990">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card">
+                    <img src="https://placehold.co/300x180/1b2838/ffffff?text=Elden+Ring" alt="Elden Ring" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">Elden Ring</h3>
+                        <p class="card-category">Soulslike / Fantasía</p>
+                        <div class="card-footer">
+                            <span class="card-price">$38.990</span>
+                            <div class="card-actions">
+                                <a href="detalle-producto.html" class="btn btn-sm">Detalle</a>
+                                <button type="button" class="btn btn-sm btn-primary btn-add-cart" data-id="5" data-name="Elden Ring" data-price="38990">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="game-card">
+                    <img src="https://placehold.co/300x180/1b2838/ffffff?text=Hollow+Knight" alt="Hollow Knight" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">Hollow Knight</h3>
+                        <p class="card-category">Metroidvania / Indie</p>
+                        <div class="card-footer">
+                            <span class="card-price">$8.500</span>
+                            <div class="card-actions">
+                                <a href="detalle-producto.html" class="btn btn-sm">Detalle</a>
+                                <button type="button" class="btn btn-sm btn-primary btn-add-cart" data-id="6" data-name="Hollow Knight" data-price="8500">Añadir</button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Steam Store Project</h4>
+                <p>Plataforma académica de distribución digital desarrollada para DSY1104.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="productos.html">Catálogo</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="blogs.html">Noticias y Actualizaciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Soporte & Panel</h4>
+                <ul>
+                    <li><a href="contacto.html">Contacto / Soporte</a></li>
+                    <li><a href="../admin/index.html">Panel de Administración</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Steam Store Project. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../js/cart.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

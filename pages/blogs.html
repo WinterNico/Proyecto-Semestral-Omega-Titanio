@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Store - Noticias y Blogs</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-box">
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="Steam Store Logo" class="brand-logo">
+                </a>
+            </div>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="blogs.html" class="active">Blogs</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <a href="login.html" class="auth-link">Iniciar sesión</a>
+                <span class="divider">|</span>
+                <a href="registro.html" class="auth-link">Registrar usuario</a>
+                <a href="carrito.html" class="cart-button">
+                    🛒 Carrito (<span id="header-cart-count">0</span>)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="blogs-main">
+        <div class="blogs-header">
+            <h1>Noticias Importantes</h1>
+            <p>Mantente al día con los casos más curiosos y lanzamientos de nuestra plataforma.</p>
+        </div>
+
+        <section class="blog-list-section">
+            <!-- Blog 1 -->
+            <article class="blog-card-horizontal">
+                <div class="blog-card-content">
+                    <h2>Caso Curioso #1: El Impacto de Cloak & Dagger en Marvel Rivals</h2>
+                    <p>Descubre cómo esta dupla está cambiando las composiciones del equipo en el meta actual del nuevo hero shooter.</p>
+                    <a href="blog-detalle-1.html" class="btn btn-outline">Leer Caso Completo</a>
+                </div>
+                <div class="blog-card-image">
+                    <img src="https://placehold.co/400x250/1b2838/ffffff?text=Marvel+Rivals" alt="Imagen del caso curioso 1">
+                </div>
+            </article>
+
+            <!-- Blog 2 -->
+            <article class="blog-card-horizontal">
+                <div class="blog-card-content">
+                    <h2>Caso Curioso #2: Rutas de farmeo óptimas en MH Wilds</h2>
+                    <p>Una guía rápida de las zonas con mejores recursos y cómo optimizar tu tiempo de recolección en los nuevos ecosistemas.</p>
+                    <a href="blog-detalle-2.html" class="btn btn-outline">Leer Caso Completo</a>
+                </div>
+                <div class="blog-card-image">
+                    <img src="https://placehold.co/400x250/1b2838/ffffff?text=MH+Wilds" alt="Imagen del caso curioso 2">
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Steam Store Project</h4>
+                <p>Plataforma académica de distribución digital desarrollada para DSY1104.</p>
+            </div>
+            <!-- (...) Resto del footer omitido para brevedad visual, puedes pegar el mismo footer que usamos siempre -->
+        </div>
+    </footer>
+
+    <script src="../js/app.js"></script>
+</body>
+</html>

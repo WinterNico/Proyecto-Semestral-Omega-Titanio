@@ -1,0 +1,173 @@
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Store - Detalle del Producto</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-box">
+                <a href="../index.html">
+                    <img src="../assets/img/logo.png" alt="Steam Store Logo" class="brand-logo">
+                </a>
+            </div>
+            <nav class="main-nav" aria-label="Navegación principal">
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="productos.html" class="active">Productos</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="blogs.html">Blogs</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="user-menu">
+                <a href="login.html" class="auth-link">Iniciar sesión</a>
+                <span class="divider">|</span>
+                <a href="registro.html" class="auth-link">Registrar usuario</a>
+                <a href="carrito.html" class="cart-button">
+                    🛒 Carrito (<span id="header-cart-count">0</span>)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-detail-main">
+        <!-- Breadcrumb / Migas de pan -->
+        <nav class="breadcrumb-nav" aria-label="Ruta de navegación">
+            <ol class="breadcrumb-list">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><span>&gt;</span></li>
+                <li><a href="productos.html">Catálogo</a></li>
+                <li><span>&gt;</span></li>
+                <li aria-current="page">Monster Hunter Wilds</li>
+            </ol>
+        </nav>
+
+        <!-- Bloque principal del detalle -->
+        <section class="product-detail-layout">
+            <!-- Columna Multimedia (Video + Galería de miniaturas) -->
+            <div class="product-media-column">
+                <div class="main-media-display">
+                    <iframe 
+                        id="main-video-frame"
+                        width="100%" 
+                        height="380" 
+                        src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                        title="Monster Hunter Wilds Trailer" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="thumbnail-row">
+                    <img src="https://placehold.co/120x70/1b2838/ffffff?text=Captura+1" alt="Captura 1" class="thumb-img active">
+                    <img src="https://placehold.co/120x70/1b2838/ffffff?text=Captura+2" alt="Captura 2" class="thumb-img">
+                    <img src="https://placehold.co/120x70/1b2838/ffffff?text=Captura+3" alt="Captura 3" class="thumb-img">
+                    <img src="https://placehold.co/120x70/1b2838/ffffff?text=Captura+4" alt="Captura 4" class="thumb-img">
+                </div>
+            </div>
+
+            <!-- Columna de Compra e Información -->
+            <div class="product-info-column">
+                <h1 class="product-title">Monster Hunter Wilds</h1>
+                <div class="product-tags">
+                    <span class="tag">Acción</span>
+                    <span class="tag">Cooperativo</span>
+                    <span class="tag">Rol</span>
+                </div>
+                <p class="product-summary">
+                    Una fuerza indomable de la naturaleza. Sumérgete en biomas ricos con transiciones dinámicas entre estaciones y clima, caza bestias formidables en solitario o con amigos.
+                </p>
+
+                <div class="purchase-panel">
+                    <div class="price-container">
+                        <span class="price-label">Precio Digital:</span>
+                        <span class="final-price" id="product-price">$39.990</span>
+                    </div>
+
+                    <form class="add-to-cart-form" id="add-to-cart-form" onsubmit="return false;">
+                        <div class="form-group-inline">
+                            <label for="product-quantity">Cantidad:</label>
+                            <input type="number" id="product-quantity" name="quantity" min="1" max="10" value="1" class="qty-input">
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-block" id="btn-add-cart" data-id="1" data-name="Monster Hunter Wilds" data-price="39990">
+                            Añadir al Carrito
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Productos Relacionados -->
+        <section class="related-products-section">
+            <h2>Juegos Relacionados</h2>
+            <div class="games-grid">
+                <article class="game-card">
+                    <img src="https://cdn2.steamgriddb.com/thumb/557fa68027943a8b0d3b66c4e72ff23b.jpg" alt="Elden Ring" class="card-img">
+                    <div class="card-body">
+                        <h4 class="card-title">Elden Ring</h4>
+                        <span class="card-price">$38.990</span>
+                    </div>
+                </article>
+                <article class="game-card">
+                    <img src="https://placehold.co/250x140/1b2838/ffffff?text=DB+Sparking+Zero" alt="Dragon Ball Sparking Zero" class="card-img">
+                    <div class="card-body">
+                        <h4 class="card-title">DB: Sparking! ZERO</h4>
+                        <span class="card-price">$45.990</span>
+                    </div>
+                </article>
+                <article class="game-card">
+                    <img src="https://placehold.co/250x140/1b2838/ffffff?text=Cyberpunk+2077" alt="Cyberpunk 2077" class="card-img">
+                    <div class="card-body">
+                        <h4 class="card-title">Cyberpunk 2077</h4>
+                        <span class="card-price">$29.990</span>
+                    </div>
+                </article>
+                <article class="game-card">
+                    <img src="https://placehold.co/250x140/1b2838/ffffff?text=Hollow+Knight" alt="Hollow Knight" class="card-img">
+                    <div class="card-body">
+                        <h4 class="card-title">Hollow Knight</h4>
+                        <span class="card-price">$8.500</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Steam Store Project</h4>
+                <p>Plataforma académica de venta de Videojuegos.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="productos.html">Catálogo</a></li>
+                    <li><a href="nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="blogs.html">Noticias y Actualizaciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Soporte & Panel</h4>
+                <ul>
+                    <li><a href="contacto.html">Contacto / Soporte</a></li>
+                    <li><a href="../admin/index.html">Panel de Administración</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Steam Store Project. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../js/cart.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

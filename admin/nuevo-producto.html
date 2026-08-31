@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Admin - Formulario Producto</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="admin-body">
+
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="../assets/img/logo.png" alt="Steam Logo" class="admin-logo">
+                <h2>Panel Admin</h2>
+            </div>
+            <nav class="admin-nav" aria-label="Menú de administración">
+                <ul>
+                    <li><a href="index.html">📊 Dashboard</a></li>
+                    <li><a href="productos.html" class="active">🎮 Productos</a></li>
+                    <li><a href="usuarios.html">👥 Usuarios</a></li>
+                    <li class="nav-divider"></li>
+                    <li><a href="../index.html" target="_blank">🌐 Ir a la Tienda</a></li>
+                    <li><a href="../pages/login.html">🚪 Cerrar Sesión</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-topbar">
+                <div class="topbar-title">
+                    <h1 id="product-form-title">Registrar Nuevo Producto</h1>
+                    <p>Ingresa la información técnica, precios e inventario del videojuego.</p>
+                </div>
+                <a href="productos.html" class="btn btn-secondary">&larr; Volver al Listado</a>
+            </header>
+
+            <section class="admin-content">
+                <div class="form-container-card">
+                    <form id="form-admin-producto" class="form-standard" novalidate>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prod-codigo">Código de Producto * (Mín. 3 caracteres)</label>
+                                <input 
+                                    type="text" 
+                                    id="prod-codigo" 
+                                    name="codigo" 
+                                    placeholder="Ej: GAME-101" 
+                                    minlength="3" 
+                                    required>
+                                <small class="error-msg" id="error-prod-codigo"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="prod-nombre">Nombre del Producto * (Máx. 100 caracteres)</label>
+                                <input 
+                                    type="text" 
+                                    id="prod-nombre" 
+                                    name="nombre" 
+                                    placeholder="Ej: Monster Hunter Wilds" 
+                                    maxlength="100" 
+                                    required>
+                                <small class="error-msg" id="error-prod-nombre"></small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prod-descripcion">Descripción del Juego (Opcional, Máx. 500 caracteres)</label>
+                            <textarea 
+                                id="prod-descripcion" 
+                                name="descripcion" 
+                                rows="4" 
+                                maxlength="500" 
+                                placeholder="Resumen del argumento, mecánicas o requisitos..."></textarea>
+                            <small class="error-msg" id="error-prod-descripcion"></small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prod-precio">Precio ($ CLP) * (0 para Free-to-Play)</label>
+                                <input 
+                                    type="number" 
+                                    id="prod-precio" 
+                                    name="precio" 
+                                    placeholder="Ej: 39990" 
+                                    min="0" 
+                                    step="0.01" 
+                                    required>
+                                <small class="error-msg" id="error-prod-precio"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="prod-categoria">Categoría *</label>
+                                <select id="prod-categoria" name="categoria" required>
+                                    <option value="">-- Selecciona una categoría --</option>
+                                    <option value="accion">Acción / Aventura</option>
+                                    <option value="rpg">Rol / RPG</option>
+                                    <option value="shooter">Hero Shooter / FPS</option>
+                                    <option value="lucha">Lucha / Anime</option>
+                                    <option value="indie">Indie / Metroidvania</option>
+                                </select>
+                                <small class="error-msg" id="error-prod-categoria"></small>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prod-stock">Stock Total (Enteros $\ge 0$) *</label>
+                                <input 
+                                    type="number" 
+                                    id="prod-stock" 
+                                    name="stock" 
+                                    placeholder="Ej: 50" 
+                                    min="0" 
+                                    step="1" 
+                                    required>
+                                <small class="error-msg" id="error-prod-stock"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="prod-stock-critico">Stock Crítico de Alerta (Opcional, Enteros $\ge 0$)</label>
+                                <input 
+                                    type="number" 
+                                    id="prod-stock-critico" 
+                                    name="stockCritico" 
+                                    placeholder="Ej: 5" 
+                                    min="0" 
+                                    step="1">
+                                <small class="error-msg" id="error-prod-stock-critico"></small>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prod-imagen">Imagen del Producto (Opcional)</label>
+                            <input 
+                                type="file" 
+                                id="prod-imagen" 
+                                name="imagen" 
+                                accept="image/png, image/jpeg, image/webp">
+                            <small class="error-msg" id="error-prod-imagen"></small>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="btn-save-product">Guardar Producto</button>
+                            <a href="productos.html" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/validations.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
