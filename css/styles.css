@@ -1,8 +1,10 @@
 /* ==========================================================================
-   1. VARIABLES GLOBALES Y RESET (ESTILO "STEAM WHATSAPP")
+   1. IMPORTACIÓN DE FUENTE PIXEL ART Y VARIABLES GLOBALES
    ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Segoe+UI:wght@400;600;700&display=swap');
+
 :root {
-    /* Fondos muy oscuros con un levísimo tono verdoso */
+    /* Fondos oscuros estilo arcade */
     --bg-main: #0a0e0b; 
     --bg-card: #111813; 
     --bg-sidebar: #0d130f; 
@@ -11,23 +13,26 @@
     
     /* Textos */
     --text-main: #f3f4f6;
-    --text-muted: #8ca393; /* Gris verdoso */
+    --text-muted: #8ca393; 
     
     /* El Verde "WhatsApp / Razer" brillante */
     --primary: #25d366; 
     --primary-hover: #1da851; 
     
-    /* Verdes oscuros para elementos secundarios */
+    /* Verdes oscuros secundarios */
     --secondary: #1c3625; 
     --secondary-hover: #264a33; 
     
-    /* Colores de estado y alertas */
+    /* Estados y alertas */
     --danger: #ff4d4d;
     --danger-hover: #cc0000;
     --success: #5cbe4a;
     --warning: #ffc107;
     
-    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Tipografías: Segoe UI para lectura, Press Start 2P para toques retro */
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-pixel: 'Press Start 2P', monospace;
+    
     --sidebar-width: 260px;
     --radius: 6px;
     --transition: all 0.25s ease-in-out;
@@ -42,7 +47,7 @@
 body.admin-body {
     background-color: var(--bg-main);
     color: var(--text-main);
-    font-family: var(--font-family);
+    font-family: var(--font-main);
     min-height: 100vh;
     line-height: 1.5;
 }
@@ -74,7 +79,7 @@ body.admin-body {
 .admin-sidebar {
     width: var(--sidebar-width);
     background-color: var(--bg-sidebar);
-    border-right: 1px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
     position: fixed;
     top: 0;
     bottom: 0;
@@ -89,19 +94,21 @@ body.admin-body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
 }
 
 .admin-logo {
     width: 38px;
     height: 38px;
     object-fit: contain;
+    image-rendering: pixelated;
 }
 
 .sidebar-header h2 {
-    font-size: 1.15rem;
-    color: var(--text-main);
-    font-weight: 600;
+    font-family: var(--font-pixel);
+    font-size: 0.75rem;
+    color: var(--primary);
+    line-height: 1.4;
 }
 
 .admin-nav {
@@ -142,15 +149,16 @@ body.admin-body {
 .admin-topbar {
     background-color: var(--bg-card);
     padding: 1.25rem 2rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .admin-topbar h1 {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-family: var(--font-pixel);
+    font-size: 0.95rem;
+    color: var(--primary);
 }
 
 .topbar-title p {
@@ -182,7 +190,7 @@ body.admin-body {
 }
 
 /* ==========================================================================
-   5. METRICAS Y DASHBOARD
+   5. MÉTRICAS Y DASHBOARD
    ========================================================================== */
 .metrics-grid {
     display: grid;
@@ -193,8 +201,9 @@ body.admin-body {
 
 .metric-card {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    border-radius: 0px; /* Toque retro */
+    box-shadow: 3px 3px 0px #000;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -202,7 +211,7 @@ body.admin-body {
 }
 
 .metric-card.alert {
-    border-color: rgba(255, 77, 77, 0.4);
+    border-color: rgba(255, 77, 77, 0.6);
 }
 
 .metric-card h3 {
@@ -212,9 +221,9 @@ body.admin-body {
 }
 
 .metric-value {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-family: var(--font-pixel);
+    font-size: 1.1rem;
+    color: var(--primary);
 }
 
 .metric-trend.positive {
@@ -243,8 +252,7 @@ body.admin-body {
    ========================================================================== */
 .quick-actions-section {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
     padding: 1.5rem;
 }
 
@@ -264,10 +272,10 @@ body.admin-body {
    ========================================================================== */
 .form-container-card {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
     padding: 2rem;
     max-width: 900px;
+    box-shadow: 4px 4px 0px #000;
 }
 
 .form-standard {
@@ -306,7 +314,7 @@ body.admin-body {
     border: 1px solid var(--border-color);
     color: var(--text-main);
     padding: 0.65rem 0.85rem;
-    border-radius: var(--radius);
+    border-radius: 0px; /* Estilo arcade cuadrado */
     font-family: inherit;
     font-size: 0.9rem;
     outline: none;
@@ -317,7 +325,7 @@ body.admin-body {
 .form-group select:focus,
 .form-group textarea:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.2); /* Sombra verde */
+    box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.3);
 }
 
 .form-group input[type="file"] {
@@ -346,8 +354,7 @@ body.admin-body {
    ========================================================================== */
 .table-container {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
     overflow-x: auto;
 }
 
@@ -365,22 +372,20 @@ body.admin-body {
 }
 
 .data-table th {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: var(--text-muted);
-    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: var(--primary);
+    font-family: var(--font-pixel);
+    font-size: 0.55rem;
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
 }
 
 .data-table tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: rgba(37, 211, 102, 0.05);
 }
 
 .data-table code {
     background-color: var(--bg-input);
     padding: 0.2rem 0.4rem;
-    border-radius: 4px;
     font-size: 0.825rem;
     color: var(--primary);
 }
@@ -389,7 +394,7 @@ body.admin-body {
     width: 50px;
     height: 30px;
     object-fit: cover;
-    border-radius: 3px;
+    image-rendering: pixelated;
     background-color: var(--bg-input);
 }
 
@@ -399,25 +404,39 @@ body.admin-body {
 }
 
 /* ==========================================================================
-   9. BOTONES, BADGES Y UTILIDADES
+   9. BOTONES RETRO ARCADE Y BADGES
    ========================================================================== */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.6rem 1.2rem;
-    border-radius: var(--radius);
+    border-radius: 0px; /* Bordes rectos estilo 8 bits */
     font-weight: 600;
-    font-size: 0.875rem;
+    font-size: 0.85rem;
     text-decoration: none;
     cursor: pointer;
-    border: none;
+    border: 2px solid transparent;
     transition: var(--transition);
+    box-shadow: 3px 3px 0px #000000; /* Sombra sólida retro */
+}
+
+.btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px var(--primary);
+}
+
+.btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px #000;
 }
 
 .btn-primary {
     background-color: var(--primary);
     color: #000000;
+    border-color: #111;
+    font-family: var(--font-pixel);
+    font-size: 0.6rem;
 }
 
 .btn-primary:hover {
@@ -427,6 +446,7 @@ body.admin-body {
 .btn-secondary {
     background-color: var(--secondary);
     color: var(--text-main);
+    border-color: var(--primary);
 }
 
 .btn-secondary:hover {
@@ -436,6 +456,7 @@ body.admin-body {
 .btn-danger {
     background-color: var(--danger);
     color: #ffffff;
+    border-color: #000;
 }
 
 .btn-danger:hover {
@@ -444,7 +465,7 @@ body.admin-body {
 
 .btn-outline {
     background-color: transparent;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
     color: var(--text-main);
 }
 
@@ -455,7 +476,7 @@ body.admin-body {
 
 .btn-outline-danger {
     background-color: transparent;
-    border: 1px solid var(--danger);
+    border: 2px solid var(--danger);
     color: var(--danger);
 }
 
@@ -466,32 +487,33 @@ body.admin-body {
 
 .btn-sm {
     padding: 0.35rem 0.7rem;
-    font-size: 0.775rem;
+    font-size: 0.75rem;
 }
 
-/* Badges */
+/* Badges estilo pixel */
 .badge {
     display: inline-block;
     padding: 0.25rem 0.6rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    border-radius: 0px;
+    font-family: var(--font-pixel);
+    font-size: 0.5rem;
+    border: 1px solid var(--primary);
 }
 
 .badge-success {
     background-color: rgba(92, 190, 74, 0.15);
     color: var(--success);
-    border: 1px solid var(--success);
+    border-color: var(--success);
 }
 
 .badge-warning {
     background-color: rgba(255, 193, 7, 0.15);
     color: var(--warning);
-    border: 1px solid var(--warning);
+    border-color: var(--warning);
 }
 
 .badge-role-admin {
-    background-color: rgba(37, 211, 102, 0.15); /* Transparencia verde */
+    background-color: rgba(37, 211, 102, 0.15);
     color: var(--primary);
     border: 1px solid var(--primary);
 }
@@ -535,21 +557,22 @@ body.admin-body {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
+    box-shadow: none;
 }
 
 /* ==========================================================================
-   11. NAVEGACIÓN PÚBLICA (HEADER) Y FOOTER
+   11. NAVEGACIÓN PÚBLICA (HEADER) Y FOOTER CON TOQUE PIXEL
    ========================================================================== */
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
-    font-family: var(--font-family);
+    font-family: var(--font-main);
     line-height: 1.6;
 }
 
 .main-header {
     background-color: var(--bg-card);
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 3px solid var(--primary);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -565,8 +588,9 @@ body {
 }
 
 .brand-logo {
-    height: 50px;
+    height: 45px;
     width: auto;
+    image-rendering: pixelated; /* Mantiene los píxeles nítidos en el logo */
     transition: var(--transition);
 }
 
@@ -583,8 +607,8 @@ body {
 .nav-links a {
     color: var(--text-main);
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
+    font-weight: 600;
+    font-size: 0.9rem;
     padding: 0.5rem 0;
     transition: var(--transition);
     text-transform: uppercase;
@@ -611,7 +635,7 @@ body {
 }
 
 .auth-link:hover, .auth-link.active {
-    color: #ffffff;
+    color: var(--primary);
 }
 
 .divider {
@@ -620,11 +644,14 @@ body {
 
 .cart-button {
     background-color: var(--secondary);
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 0px;
     text-decoration: none;
-    font-weight: bold;
+    font-family: var(--font-pixel);
+    font-size: 0.55rem;
+    box-shadow: 2px 2px 0px #000;
     transition: var(--transition);
 }
 
@@ -635,7 +662,7 @@ body {
 
 .main-footer {
     background-color: var(--bg-card);
-    border-top: 1px solid var(--border-color);
+    border-top: 3px solid var(--border-color);
     padding: 3rem 2rem 1rem;
     margin-top: 4rem;
 }
@@ -650,9 +677,10 @@ body {
 }
 
 .footer-col h4 {
+    font-family: var(--font-pixel);
+    font-size: 0.65rem;
     color: var(--primary);
     margin-bottom: 1rem;
-    font-size: 1.1rem;
 }
 
 .footer-col ul {
@@ -670,7 +698,7 @@ body {
 }
 
 .footer-col a:hover {
-    color: #ffffff;
+    color: var(--primary);
 }
 
 .footer-bottom {
@@ -682,7 +710,7 @@ body {
 }
 
 /* ==========================================================================
-   12. PÁGINA DE INICIO (HOME) Y CATÁLOGO
+   12. PÁGINA DE INICIO (HOME) Y CATÁLOGO TIPO ARCADE
    ========================================================================== */
 .home-main, .catalog-main, .contact-main, .auth-main, .about-main, .blogs-main, .blog-detail-main, .cart-main {
     max-width: 1200px;
@@ -693,8 +721,9 @@ body {
 .hero-showcase {
     display: flex;
     background: linear-gradient(to right, var(--bg-card), var(--bg-main));
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 3px solid var(--primary);
+    border-radius: 0px;
+    box-shadow: 6px 6px 0px #000000;
     overflow: hidden;
     margin-bottom: 3rem;
 }
@@ -708,14 +737,16 @@ body {
 }
 
 .game-title {
-    font-size: 2.5rem;
-    margin: 0.5rem 0 1rem;
-    color: #ffffff;
+    font-family: var(--font-pixel);
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin: 0.75rem 0 1rem;
+    color: var(--primary);
 }
 
 .game-description {
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-bottom: 1.5rem;
 }
 
@@ -724,9 +755,10 @@ body {
     align-items: center;
     gap: 1rem;
     margin-bottom: 2rem;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.5);
+    border: 1px dashed var(--primary);
     padding: 0.5rem 1rem;
-    border-radius: var(--radius);
+    border-radius: 0px;
     width: fit-content;
 }
 
@@ -734,8 +766,8 @@ body {
     background-color: var(--success);
     color: #000;
     padding: 0.2rem 0.5rem;
-    font-weight: bold;
-    border-radius: 3px;
+    font-family: var(--font-pixel);
+    font-size: 0.5rem;
 }
 
 .old-price {
@@ -744,8 +776,8 @@ body {
 }
 
 .current-price {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-family: var(--font-pixel);
+    font-size: 0.9rem;
     color: var(--primary);
 }
 
@@ -762,6 +794,13 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    image-rendering: pixelated;
+}
+
+.section-header h2, .catalog-header h1 {
+    font-family: var(--font-pixel);
+    font-size: 0.95rem;
+    color: var(--primary);
 }
 
 .section-header, .catalog-header {
@@ -769,7 +808,7 @@ body {
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 1rem;
 }
 
@@ -784,7 +823,7 @@ body {
 }
 
 /* ==========================================================================
-   13. TARJETAS DE PRODUCTOS (GAME CARDS)
+   13. TARJETAS DE PRODUCTOS (GAME CARDS ARCADE)
    ========================================================================== */
 .games-grid, .catalog-grid {
     display: grid;
@@ -794,8 +833,9 @@ body {
 
 .game-card {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    border-radius: 0px;
+    box-shadow: 4px 4px 0px #000000;
     overflow: hidden;
     transition: var(--transition);
     display: flex;
@@ -803,8 +843,8 @@ body {
 }
 
 .game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+    transform: translateY(-4px);
+    box-shadow: 6px 6px 0px var(--primary);
     border-color: var(--primary);
 }
 
@@ -812,6 +852,7 @@ body {
     width: 100%;
     height: 150px;
     object-fit: cover;
+    image-rendering: pixelated;
 }
 
 .card-body {
@@ -822,6 +863,8 @@ body {
 }
 
 .card-title {
+    font-family: var(--font-main);
+    font-weight: 700;
     font-size: 1.1rem;
     margin-bottom: 0.25rem;
     color: #ffffff;
@@ -842,9 +885,9 @@ body {
 }
 
 .card-price {
-    font-weight: bold;
+    font-family: var(--font-pixel);
+    font-size: 0.75rem;
     color: var(--primary);
-    font-size: 1.1rem;
 }
 
 .card-actions {
@@ -892,6 +935,7 @@ body {
 .thumb-img {
     cursor: pointer;
     border: 2px solid transparent;
+    image-rendering: pixelated;
     transition: var(--transition);
     opacity: 0.6;
 }
@@ -904,13 +948,16 @@ body {
 .product-info-column {
     background-color: var(--bg-card);
     padding: 2rem;
-    border-radius: var(--radius);
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px #000;
 }
 
 .product-title {
-    font-size: 2rem;
+    font-family: var(--font-pixel);
+    font-size: 1.1rem;
+    color: var(--primary);
     margin-bottom: 1rem;
+    line-height: 1.4;
 }
 
 .product-tags {
@@ -922,8 +969,8 @@ body {
 .tag {
     background-color: var(--bg-input);
     padding: 0.2rem 0.6rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    border: 1px solid var(--border-color);
+    font-size: 0.75rem;
     color: var(--text-muted);
 }
 
@@ -932,9 +979,8 @@ body {
 }
 
 .purchase-panel {
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.3);
     padding: 1.5rem;
-    border-radius: var(--radius);
     border: 1px solid var(--border-color);
 }
 
@@ -946,8 +992,8 @@ body {
 }
 
 .final-price {
-    font-size: 1.75rem;
-    font-weight: bold;
+    font-family: var(--font-pixel);
+    font-size: 0.95rem;
     color: var(--primary);
 }
 
@@ -964,7 +1010,6 @@ body {
     background-color: var(--bg-input);
     border: 1px solid var(--border-color);
     color: #fff;
-    border-radius: 4px;
     text-align: center;
 }
 
@@ -974,9 +1019,15 @@ body {
     gap: 2rem;
     background-color: var(--bg-card);
     padding: 2rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px #000;
     margin-top: 1.5rem;
+}
+
+.spec-column h3 {
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    color: var(--primary);
 }
 
 .spec-column ul {
@@ -1006,8 +1057,8 @@ body {
     align-items: center;
     background-color: var(--bg-card);
     padding: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 3px 3px 0px #000;
     gap: 1.5rem;
 }
 
@@ -1015,7 +1066,7 @@ body {
     width: 120px;
     height: 70px;
     object-fit: cover;
-    border-radius: 4px;
+    image-rendering: pixelated;
 }
 
 .cart-item-info {
@@ -1033,8 +1084,9 @@ body {
 }
 
 .cart-item-price {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-family: var(--font-pixel);
+    font-size: 0.7rem;
+    color: var(--primary);
 }
 
 .cart-item-quantity {
@@ -1084,10 +1136,17 @@ body {
 .summary-card {
     background-color: var(--bg-card);
     padding: 2rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px #000;
     position: sticky;
     top: 100px;
+}
+
+.summary-card h2 {
+    font-family: var(--font-pixel);
+    font-size: 0.75rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
 }
 
 .summary-row {
@@ -1103,16 +1162,16 @@ body {
 }
 
 .total-row {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-family: var(--font-pixel);
+    font-size: 0.85rem;
     color: var(--primary);
 }
 
 .coupon-box {
     margin: 2rem 0;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.3);
     padding: 1rem;
-    border-radius: 4px;
+    border: 1px dashed var(--border-color);
 }
 
 .coupon-input-group {
@@ -1127,11 +1186,10 @@ body {
     border: 1px solid var(--border-color);
     border-right: none;
     color: #fff;
-    border-radius: 4px 0 0 4px;
 }
 
 .coupon-input-group button {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0px;
 }
 
 .btn-block {
@@ -1141,6 +1199,7 @@ body {
 .btn-success {
     background-color: var(--success);
     color: #fff;
+    border-color: #111;
 }
 
 .btn-success:hover {
@@ -1152,16 +1211,23 @@ body {
    ========================================================================== */
 .auth-card, .contact-card {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--primary);
+    box-shadow: 6px 6px 0px #000;
     padding: 3rem;
     max-width: 500px;
     margin: 2rem auto;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .register-card {
     max-width: 700px;
+}
+
+.auth-header h2, .contact-header h2 {
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    color: var(--primary);
+    margin-top: 0.5rem;
+    line-height: 1.4;
 }
 
 .auth-header, .contact-header {
@@ -1171,6 +1237,7 @@ body {
 
 .auth-logo, .contact-logo {
     width: 60px;
+    image-rendering: pixelated;
     margin-bottom: 1rem;
 }
 
@@ -1192,9 +1259,16 @@ body {
     text-align: center;
     padding: 4rem 2rem;
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px #000;
     margin-bottom: 3rem;
+}
+
+.about-hero h1 {
+    font-family: var(--font-pixel);
+    font-size: 1rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
 }
 
 .team-grid {
@@ -1206,21 +1280,29 @@ body {
 
 .team-card {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px #000;
     padding: 2rem;
     text-align: center;
 }
 
+.team-card h3 {
+    font-family: var(--font-pixel);
+    font-size: 0.8rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
 .team-avatar {
-    border-radius: 50%;
+    border-radius: 0px;
+    image-rendering: pixelated;
     margin-bottom: 1rem;
-    border: 3px solid var(--primary);
+    border: 2px solid var(--primary);
 }
 
 .team-role {
     color: var(--primary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-bottom: 1rem;
 }
 
@@ -1231,11 +1313,17 @@ body {
     margin-top: 2rem;
 }
 
+.blogs-header h1 {
+    font-family: var(--font-pixel);
+    font-size: 1rem;
+    color: var(--primary);
+}
+
 .blog-card-horizontal {
     display: flex;
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px #000;
     overflow: hidden;
 }
 
@@ -1249,7 +1337,9 @@ body {
 }
 
 .blog-card-content h2 {
+    font-size: 1.2rem;
     margin-bottom: 1rem;
+    color: #fff;
 }
 
 .blog-card-content p {
@@ -1265,12 +1355,13 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    image-rendering: pixelated;
 }
 
 .blog-detail-article {
     background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px #000;
     padding: 3rem;
 }
 
@@ -1281,16 +1372,19 @@ body {
 
 .article-category {
     background-color: var(--secondary);
-    color: #fff;
+    color: var(--primary);
+    border: 1px solid var(--primary);
     padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-family: var(--font-pixel);
+    font-size: 0.5rem;
 }
 
 .article-header h1 {
+    font-family: var(--font-pixel);
+    font-size: 1rem;
+    color: var(--primary);
     margin: 1rem 0;
-    font-size: 2.5rem;
+    line-height: 1.4;
 }
 
 .article-featured-image {
@@ -1299,7 +1393,7 @@ body {
 
 .article-featured-image img {
     width: 100%;
-    border-radius: var(--radius);
+    image-rendering: pixelated;
 }
 
 .article-body p {
@@ -1309,19 +1403,19 @@ body {
 }
 
 .article-body h3 {
+    font-family: var(--font-pixel);
+    font-size: 0.75rem;
     color: var(--primary);
     margin: 2rem 0 1rem;
 }
 
 .article-body blockquote {
     border-left: 4px solid var(--primary);
-    padding-left: 1.5rem;
     margin: 2rem 0;
     font-style: italic;
     color: var(--text-muted);
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.3);
     padding: 1.5rem;
-    border-radius: 0 var(--radius) var(--radius) 0;
 }
 
 /* ==========================================================================
