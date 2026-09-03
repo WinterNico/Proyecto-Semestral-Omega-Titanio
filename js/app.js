@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     actualizarContadorHeader();
 
     // AÑADIR A CARRITO //
-    const botonesAñadir = document.querySelector('button[data-id]')
+    const botonesAñadir = document.querySelectorAll('button[data-id]')
     botonesAñadir.forEach(boton => {
         boton.addEventListener('click', () => {
             // Por aca se extrae todo lo que esta en el html, que serian para datos nomas
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () =>{
             localStorage.setItem('steam_carrito', JSON.stringify(carrito));
             actualizarContadorHeader();
 
-            alert('¡Se ha añadido ${nombre} al carrito! :D')
+            alert(`¡Se ha añadido ${nombre} al carrito! :D`);
         });
     });
 
