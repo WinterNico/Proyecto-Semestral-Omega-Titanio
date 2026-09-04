@@ -49,39 +49,6 @@ document.addEventListener('DOMContentLoaded', () =>{
         });
     });
 
-
-    // Logica para admin - usuarios //
-    const formAdminUsuario = document.getElementById('form-admin-usuario');
-    if (formAdminUsuario) {
-        formAdminUsuario.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const run = document.getElementById('admin-user-run').value;
-            const email = document.getElementById('admin-user-email').value;
-            const errorRun = document.getElementById('error-admin-user-run');
-            const errorEmail = document.getElementById('error-admin-user-email');
-
-            let esValido = true;
-            errorRun.textContent = "";
-            errorEmail.textContent = "";
-
-            // se recicla lo q ya tenemos
-            if (!regexRun.test(run)) {
-                errorRun.textContent = "RUN inválido. Ingresa entre 7 y 9 caracteres sin puntos ni guión.";
-                esValido = false;
-            }
-            if (!regexEmail.test(email)) {
-                errorEmail.textContent = "Dominio no permitido. Usa @duoc.cl, @profesor.duoc.cl o @gmail.com";
-                esValido = false;
-            }
-
-            if (esValido) {
-                alert("¡Usuario administrador registrado exitosamente en el sistema!");
-                formAdminUsuario.reset();
-            }
-        });
-    }
-
     // Logica para admin - productos //
     const formAdminProducto = document.getElementById('form-admin-producto');
     if (formAdminProducto) {
