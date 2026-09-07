@@ -1419,7 +1419,7 @@ body {
 }
 
 /* ==========================================================================
-   18. RESPONSIVE Y MEDIA QUERIES
+   18. DISEÑO ADAPTABLE Y RESOLUCIONES DE PANTALLA
    ========================================================================== */
 @media (max-width: 992px) {
     .product-detail-layout, .cart-layout {
