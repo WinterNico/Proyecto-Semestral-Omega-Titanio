@@ -4,51 +4,68 @@ import Navbar from './components/layout/Navbar.jsx';
 import Footer from './components/layout/Footer.jsx';
 import Placeholder from './components/common/Placeholder.jsx';
 
+import Home from './pages/Home.jsx';
+import Catalogo from './pages/Catalogo.jsx';
+import DetalleJuego from './pages/DetalleJuego.jsx';
+import Categorias from './pages/Categorias.jsx';
+import Ofertas from './pages/Ofertas.jsx';
+import Noticias from './pages/Noticias.jsx';
+import NoticiaDetalle from './pages/NoticiaDetalle.jsx';
+import Nosotros from './pages/Nosotros.jsx';
+import Contacto from './pages/Contacto.jsx';
+import Carrito from './pages/Carrito.jsx';
+import Checkout from './pages/Checkout.jsx';
+import CompraExitosa from './pages/CompraExitosa.jsx';
+import PagoFallido from './pages/PagoFallido.jsx';
+import Login from './pages/Login.jsx';
+import Registro from './pages/Registro.jsx';
+import Perfil from './pages/Perfil.jsx';
+import MisCompras from './pages/MisCompras.jsx';
+import NotFound from './pages/NotFound.jsx';
+
 export default function App() {
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
       <Navbar />
-      <main className="container my-4">
+
+      <main className="container my-4 flex-grow-1">
         <Routes>
-          {/* Tienda (Integrante 2) */}
-          <Route path="/" element={<Placeholder nombre="Home" />} />
-          <Route path="/productos" element={<Placeholder nombre="Productos" />} />
-          <Route path="/productos/:id" element={<Placeholder nombre="Detalle producto" />} />
-          <Route path="/categorias" element={<Placeholder nombre="Categorías" />} />
-          <Route path="/categorias/:slug" element={<Placeholder nombre="Categoría" />} />
-          <Route path="/ofertas" element={<Placeholder nombre="Ofertas" />} />
-          <Route path="/blog" element={<Placeholder nombre="Blog" />} />
-          <Route path="/blog/:id" element={<Placeholder nombre="Detalle blog" />} />
-          <Route path="/nosotros" element={<Placeholder nombre="Nosotros" />} />
-          <Route path="/contacto" element={<Placeholder nombre="Contacto" />} />
-          <Route path="/registro" element={<Placeholder nombre="Registro" />} />
-          <Route path="/login" element={<Placeholder nombre="Iniciar sesión" />} />
-          <Route path="/carrito" element={<Placeholder nombre="Carrito" />} />
-          <Route path="/checkout" element={<Placeholder nombre="Checkout" />} />
-          <Route path="/compra-exitosa/:orden" element={<Placeholder nombre="Compra exitosa" />} />
-          <Route path="/pago-fallido/:orden" element={<Placeholder nombre="Pago fallido" />} />
+          {/* Vistas de Tienda (Integrante 2) */}
+          <Route path="/" element={<Home />} />
+          <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="/productos" element={<Catalogo />} />
+          <Route path="/juego/:id" element={<DetalleJuego />} />
+          <Route path="/producto/:id" element={<DetalleJuego />} />
+          <Route path="/categorias" element={<Categorias />} />
+          <Route path="/ofertas" element={<Ofertas />} />
+          <Route path="/noticias" element={<Noticias />} />
+          <Route path="/noticias/:id" element={<NoticiaDetalle />} />
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/contacto" element={<Contacto />} />
 
-          {/* Panel admin (Integrante 3) */}
-          <Route path="/admin" element={<Placeholder nombre="Admin Dashboard" />} />
-          <Route path="/admin/ordenes" element={<Placeholder nombre="Admin Órdenes" />} />
-          <Route path="/admin/productos" element={<Placeholder nombre="Admin Productos" />} />
-          <Route path="/admin/productos/nuevo" element={<Placeholder nombre="Nuevo producto" />} />
-          <Route path="/admin/productos/:id" element={<Placeholder nombre="Mostrar producto" />} />
-          <Route path="/admin/productos/:id/editar" element={<Placeholder nombre="Editar producto" />} />
-          <Route path="/admin/productos/criticos" element={<Placeholder nombre="Productos críticos" />} />
-          <Route path="/admin/categorias" element={<Placeholder nombre="Admin Categorías" />} />
-          <Route path="/admin/usuarios" element={<Placeholder nombre="Admin Usuarios" />} />
-          <Route path="/admin/usuarios/nuevo" element={<Placeholder nombre="Nuevo usuario" />} />
-          <Route path="/admin/usuarios/:id" element={<Placeholder nombre="Mostrar usuario" />} />
-          <Route path="/admin/usuarios/:id/editar" element={<Placeholder nombre="Editar usuario" />} />
-          <Route path="/admin/usuarios/:id/historial" element={<Placeholder nombre="Historial de compras" />} />
-          <Route path="/admin/reportes" element={<Placeholder nombre="Reportes" />} />
-          <Route path="/admin/perfil" element={<Placeholder nombre="Perfil" />} />
+          {/* Flujo de Carrito, Checkout y Boletas (Integrante 2) */}
+          <Route path="/carrito" element={<Carrito />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/compra-exitosa" element={<CompraExitosa />} />
+          <Route path="/pago-fallido" element={<PagoFallido />} />
 
-          <Route path="*" element={<Placeholder nombre="Página no encontrada" />} />
+          {/* Autenticación y Cuenta (Integrante 2) */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/perfil" element={<Perfil />} />
+          <Route path="/mis-compras" element={<MisCompras />} />
+
+          {/* Vistas del Panel Admin (Pendientes para Integrante 3) */}
+          <Route path="/admin" element={<Placeholder nombre="Panel Admin - Dashboard" />} />
+          <Route path="/admin/juegos" element={<Placeholder nombre="Panel Admin - Gestión Juegos" />} />
+          <Route path="/admin/usuarios" element={<Placeholder nombre="Panel Admin - Gestión Usuarios" />} />
+
+          {/* Ruta 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+
       <Footer />
-    </>
+    </div>
   );
 }
