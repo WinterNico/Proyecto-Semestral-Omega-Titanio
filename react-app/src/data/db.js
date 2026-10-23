@@ -1,5 +1,3 @@
-// src/data/db.js
-
 // Datos iniciales: se usan solo la primera vez, cuando no hay nada guardado.
 const SEED = {
   productos: [

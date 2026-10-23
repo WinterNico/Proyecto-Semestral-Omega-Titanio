@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 
 const AdminLayout = () => {
+    const { logout, usuario } = useCart();
     return (
         // Se cambio d-flex por container-fluid y row para manejar las columnas responsivas de Bootstrap
         <div data-bs-theme="dark" className="admin-layout container-fluid min-vh-100 bg-dark text-light p-0">            
@@ -43,10 +44,11 @@ const AdminLayout = () => {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/login" className="nav-link text-danger">
+                                <button onClick={logout} className="nav-link text-danger bg-transparent border-0 w-100 text-start">
                                     🚪 Cerrar Sesión
-                                </Link>
+                                </button>
                             </li>
+                            <span className="fw-bold">{usuario?.nombre} {usuario?.apellidos}</span>
                         </ul>
                     </nav>
                 </aside>
@@ -54,7 +56,7 @@ const AdminLayout = () => {
                 {/* AREA CONTENIDO PRINCIPAL */}
                 <main className="admin-main col-12 col-md-9 col-xl-10 d-flex flex-column">
                     <header className="admin-topbar d-flex justify-content-between align-items-center p-3 bg-black border-bottom border-success border-opacity-25 shadow-sm">
-                        <h1 className="h5 mb-0">¡Hola, Administrador!</h1>
+                        <h1 className="h5 mb-0">¡Hola, {usuario?.nombre} {usuario?.apellidos} </h1>
                         <div className="admin-profile-badge d-flex align-items-center gap-2">
                             <span className="fw-bold">Admin Principal</span>
                             <div className="bg-success rounded-circle" style={{ width: '10px', height: '10px' }}></div>

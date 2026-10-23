@@ -1,6 +1,7 @@
 import { Routes, Route, Outlet } from 'react-router-dom';
 import Navbar from './components/layout/Navbar.jsx';
 import Footer from './components/layout/Footer.jsx';
+import RutaProtegida from './components/layout/RutaProtegida.jsx';
 
 // Importaciones de la Tienda 
 import Home from './pages/Home.jsx';
@@ -47,6 +48,14 @@ const TiendaLayout = () => {
 export default function App() {
   return (
     <Routes>
+      {/* ZONA ADMINISTRADOR (Protegida) */}
+      <Route element={<RutaProtegida />}>
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="productos" element={<AdminProductos />} />
+        </Route>
+      </Route>
+
       {/* ZONA ADMINISTRADOR */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminDashboard />} />
