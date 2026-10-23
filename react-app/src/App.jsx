@@ -48,23 +48,17 @@ const TiendaLayout = () => {
 export default function App() {
   return (
     <Routes>
-      {/* ZONA ADMINISTRADOR (Protegida) */}
+      {/* ZONA ADMINISTRADOR */}
       <Route element={<RutaProtegida />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="productos" element={<AdminProductos />} />
+          <Route path="nuevo-producto" element={<AdminNuevoProducto />} />
+          <Route path="editar-producto/:id" element={<AdminNuevoProducto />} />
+          <Route path="usuarios" element={<AdminUsuarios />} />
+          <Route path="nuevo-usuario" element={<AdminNuevoUsuario />} />
+          <Route path="editar-usuario/:run" element={<AdminNuevoUsuario />} />
         </Route>
-      </Route>
-
-      {/* ZONA ADMINISTRADOR */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashboard />} />
-        <Route path="productos" element={<AdminProductos />} />
-        <Route path="nuevo-producto" element={<AdminNuevoProducto />} />
-        <Route path="editar-producto/:id" element={<AdminNuevoProducto />} />
-        <Route path="usuarios" element={<AdminUsuarios />} />
-        <Route path="nuevo-usuario" element={<AdminNuevoUsuario />} />
-        <Route path="editar-usuario/:run" element={<AdminNuevoUsuario />} />
       </Route>
 
       {/* ZONA TIENDA PUBLICA (Usa el TiendaLayout con Navbar y Footer) */}

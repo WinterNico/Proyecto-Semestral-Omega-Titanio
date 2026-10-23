@@ -10,6 +10,11 @@ const AdminLayout = () => {
         return <Navigate to="/login" replace />;
     }
 
+    // Validar que el usuario tenga rol 'admin'
+    if (usuarioLogueado.rol !== 'admin') {
+        return <Navigate to="/" replace />;
+    }
+
     return (
         <div data-bs-theme="dark" className="admin-layout container-fluid min-vh-100 bg-dark text-light p-0">
             <div className="row g-0 min-vh-100">
