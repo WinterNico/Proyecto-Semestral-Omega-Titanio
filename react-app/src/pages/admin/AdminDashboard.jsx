@@ -1,25 +1,36 @@
-import React from 'react';
 import MetricCard from '../../components/common/MetriCard.jsx';
 import { Link } from 'react-router-dom';
+import { db } from '../../data/db.js';
+import { formatearMontoBoleta } from '../../utils/validaciones.js';
+
+const UMBRAL_STOCK_CRITICO = 5;
 
 const AdminDashboard = () => {
+    const productos = db.productos.obtenerTodos();
+    const usuarios = db.usuarios.obtenerTodos();
+    const ordenes = db.ordenes.obtenerTodos();
+
+    const exitosas = ordenes.filter((o) => o.estado === 'EXITOSO');
+    const totalVentas = exitosas.reduce((acc, o) => acc + (Number(o.total) || 0), 0);
+    const criticos = productos.filter((p) => Number(p.stock) <= UMBRAL_STOCK_CRITICO).length;
+
     return (
         <div className="dashboard-container">
-            {/* Tarjetas resumen de metricas usando el sistema de grillas de Bootstrap */}
             <div className="row mb-4 metrics-grid">
                 <div className="col-md-3 mb-3">
-                    <MetricCard titulo="Total Ventas" valor="$1.450.000" textoEnlace="+12% este mes" />
+                    <MetricCard titulo="Total Ventas" valor={formatearMontoBoleta(totalVentas)} textoEnlace={`${exitosas.length} órdenes exitosas`} />
                 </div>
                 <div className="col-md-3 mb-3">
-                    <MetricCard titulo="Juegos en Catálogo" valor="6" enlace="/admin/productos" textoEnlace="Ver inventario" />
+                    <MetricCard titulo="Juegos en Catálogo" valor={productos.length} enlace="/admin/productos" textoEnlace="Ver inventario" />
                 </div>
                 <div className="col-md-3 mb-3">
-                    <MetricCard titulo="Usuarios Registrados" valor="18" enlace="/admin/usuarios" textoEnlace="Ver lista" />
+                    <MetricCard titulo="Usuarios Registrados" valor={usuarios.length} enlace="/admin/usuarios" textoEnlace="Ver lista" />
                 </div>
                 <div className="col-md-3 mb-3">
-                    <MetricCard titulo="Stock Crítico" valor="2 Juegos" textoEnlace="Requiere reposición" esAlerta={true} />
+                    <MetricCard titulo="Stock Crítico" valor={`${criticos} ${criticos === 1 ? 'Juego' : 'Juegos'}`} textoEnlace={criticos > 0 ? 'Requiere reposición' : 'Todo en orden'} esAlerta={criticos > 0} />
                 </div>
             </div>
+            {/* ... aquí sigue tu bloque "Acciones Rápidas" sin cambios ... */}
 
             {/* Accesos directos para gestion */}
             <div className="card shadow-sm quick-actions-section mt-2">
