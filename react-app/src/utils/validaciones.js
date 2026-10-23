@@ -1,7 +1,7 @@
 // src/utils/validaciones.js
 
 const REGEX_EMAIL = /^[a-zA-Z0-9._%+-]+@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
-const REGEX_RUN = /^[0-9]{7,8}[0-9Kk]$/;
+const REGEX_RUN = /^([0-9]{7}[0-9Kk]|[0-9]{8}[0-9Kk])$/;
 
 export function validarRun(run) {
   if (!run || typeof run !== 'string') return false;

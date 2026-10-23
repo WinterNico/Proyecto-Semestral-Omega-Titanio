@@ -5,7 +5,8 @@ import { useCart } from '../../context/CartContext.jsx';
 import { formatearMontoBoleta } from '../../utils/validaciones.js';
 
 export default function Navbar() {
-  const { totalItems, totalPrice, user, logout } = useCart();
+ const { totalItems, totalPrice, user, logout } = useCart();
+ const usuarioActivo = user; 
   const [busqueda, setBusqueda] = useState('');
   const navigate = useNavigate();
 
@@ -107,15 +108,15 @@ export default function Navbar() {
               )}
             </Link>
 
-            {user ? (
+            {usuarioActivo ? (
               <div className="d-flex align-items-center gap-2">
                 <Link to="/perfil" className="btn btn-sm btn-outline-info">
-                  👤 {user.nombre}
+                  👤 {usuarioActivo.nombre}
                 </Link>
-                {user.rol === 'admin' && (
-                  <Link to="/admin" className="btn btn-sm btn-warning">
-                    Admin
-                  </Link>
+                {usuarioActivo.rol === 'admin' && (
+                <Link to="/admin" className="btn btn-sm btn-warning">
+                  Admin
+                </Link>
                 )}
                 <button
                   type="button"

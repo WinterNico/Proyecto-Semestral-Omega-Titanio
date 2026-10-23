@@ -28,20 +28,20 @@ const AdminUsuarios = () => {
         cargarUsuarios();
     }, []);
 
-    const handleEliminar = (run, nombre) => {
-        if (window.confirm(`¿Estás seguro de eliminar al usuario: ${nombre}?`)) {
-            try {
-                const eliminado = db.usuarios.eliminar(run);
-                if (eliminado) {
-                    cargarUsuarios(); 
-                } else {
-                    alert('No se pudo eliminar el usuario');
-                }
-            } catch (e) {
-                alert('Error al eliminar: ' + e.message);
+    const handleEliminar = (id, nombre) => {
+    if (window.confirm(`¿Estás seguro de eliminar al usuario: ${nombre}?`)) {
+        try {
+            const eliminado = db.usuarios.eliminar(id);
+            if (eliminado) {
+                cargarUsuarios(); 
+            } else {
+                alert('No se pudo eliminar el usuario');
             }
+        } catch (e) {
+            alert('Error al eliminar: ' + e.message);
         }
-    };
+    }
+};
 
     return (
         <div className="usuarios-container">
@@ -100,8 +100,7 @@ const AdminUsuarios = () => {
                                                 </Link>
                                                 <button 
                                                     className="btn btn-sm btn-danger"
-                                                    onClick={() => handleEliminar(user.run, `${user.nombre} ${user.apellidos}`)}
-                                                >
+                                                    onClick={() => handleEliminar(user.id, `${user.nombre} ${user.apellidos}`)}                                                >
                                                     Eliminar
                                                 </button>
                                             </div>

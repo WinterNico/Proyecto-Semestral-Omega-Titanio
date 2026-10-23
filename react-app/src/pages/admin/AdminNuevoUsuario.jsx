@@ -145,13 +145,23 @@ const AdminNuevoUsuario = () => {
 
             <div className="card bg-black text-light border-secondary shadow-sm">
                 <div className="card-body p-4">
-                    <form onSubmit={handleSubmit} noValidate>
+                    <form onSubmit={handleSubmit}>
                         
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">RUN *</label>
-                                <input type="text" className={`form-control bg-dark text-light border-secondary ${errores.run ? 'is-invalid' : ''}`} name="run" placeholder="Ej: 19011022K" required onChange={handleChange} value={formData.run} disabled={esEdicion} />
-                                {errores.run && <div className="invalid-feedback">{errores.run}</div>}
+                                <input 
+                                    type="text" 
+                                    className={`form-control bg-dark text-light border-secondary ${errores.run ? 'is-invalid' : ''}`}
+                                    name="run" 
+                                    placeholder="Ej: 19011022K" 
+                                    required 
+                                    onChange={handleChange} 
+                                    value={formData.run} 
+                                    disabled={esEdicion}
+                                    pattern="^([0-9]{7}[0-9Kk]|[0-9]{8}[0-9Kk])$"          
+                                    title="Formato: 12345678K o 123456789K" 
+                                />                                {errores.run && <div className="invalid-feedback">{errores.run}</div>}
                                 {esEdicion && <div className="form-text text-muted">El RUN no se puede modificar en edición</div>}
                             </div>
                             <div className="col-md-6">
