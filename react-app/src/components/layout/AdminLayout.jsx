@@ -1,25 +1,23 @@
 import React from 'react';
-import { Outlet, NavLink, Link } from 'react-router-dom';
+import { Outlet, NavLink, Link, Navigate } from 'react-router-dom';
+import { useCart } from '../../context/CartContext.jsx';
 
 const AdminLayout = () => {
-    const { logout, usuario } = useCart();
+    const { user, usuario, cliente, logout } = useCart();
+    const usuarioLogueado = user || usuario || cliente;
+
+    if (!usuarioLogueado) {
+        return <Navigate to="/login" replace />;
+    }
+
     return (
-        // Se cambio d-flex por container-fluid y row para manejar las columnas responsivas de Bootstrap
-        <div data-bs-theme="dark" className="admin-layout container-fluid min-vh-100 bg-dark text-light p-0">            
+        <div data-bs-theme="dark" className="admin-layout container-fluid min-vh-100 bg-dark text-light p-0">
             <div className="row g-0 min-vh-100">
-                {/* BARRA LATERAL (Sidebar) */}
                 <aside className="admin-sidebar col-12 col-md-3 col-xl-2 bg-black text-light p-3 border-end border-success border-opacity-25">
                     <div className="sidebar-header text-center mb-4">
-                        <img 
-                            src="../assets/img/logo.png" 
-                            alt="Steam Logo" 
-                            className="admin-logo mb-2" 
-                            width="60" 
-                            height="60" 
-                        />
+                        <img src="../assets/img/logo.png" alt="Steam Logo" className="admin-logo mb-2" width="60" height="60" />
                         <h2 className="fs-5">Panel Admin</h2>
                     </div>
-                    
                     <nav className="admin-nav" aria-label="Menú de administración">
                         <ul className="nav flex-column gap-2">
                             <li className="nav-item">
@@ -48,22 +46,21 @@ const AdminLayout = () => {
                                     🚪 Cerrar Sesión
                                 </button>
                             </li>
-                            <span className="fw-bold">{usuario?.nombre} {usuario?.apellidos}</span>
+                            <span className="fw-bold mt-3 text-center d-block text-success">
+                                {usuarioLogueado?.nombre} {usuarioLogueado?.apellidos}
+                            </span>
                         </ul>
                     </nav>
                 </aside>
 
-                {/* AREA CONTENIDO PRINCIPAL */}
                 <main className="admin-main col-12 col-md-9 col-xl-10 d-flex flex-column">
                     <header className="admin-topbar d-flex justify-content-between align-items-center p-3 bg-black border-bottom border-success border-opacity-25 shadow-sm">
-                        <h1 className="h5 mb-0">¡Hola, {usuario?.nombre} {usuario?.apellidos} </h1>
+                        <h1 className="h5 mb-0">¡Hola, {usuarioLogueado?.nombre}!</h1>
                         <div className="admin-profile-badge d-flex align-items-center gap-2">
                             <span className="fw-bold">Admin Principal</span>
                             <div className="bg-success rounded-circle" style={{ width: '10px', height: '10px' }}></div>
                         </div>
                     </header>
-
-                    {/* Outlet renderiza la pagina que corresponda segun la URL */}
                     <section className="admin-content p-4 flex-grow-1">
                         <Outlet />
                     </section>

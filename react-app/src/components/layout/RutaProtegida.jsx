@@ -3,20 +3,17 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useCart } from '../../context/CartContext.jsx';
 
 const RutaProtegida = () => {
-    // Obtenemos el usuario actual del contexto
-    const { usuario } = useCart();
+    const { user, usuario, cliente } = useCart();
+    const usuarioLogueado = user || usuario || cliente;
 
-    // Si no hay usuario logueado, lo mandamos al login
-    if (!usuario) {
+    if (!usuarioLogueado) {
         return <Navigate to="/login" replace />;
     }
 
-    // Si hay usuario, pero su rol NO es "admin"
-    if (usuario.rol !== 'admin') {
+    if (usuarioLogueado.rol !== 'admin') {
         return <Navigate to="/" replace />;
     }
 
-    // Si pasó las validaciones, renderizamos el panel de administrador
     return <Outlet />;
 };
 

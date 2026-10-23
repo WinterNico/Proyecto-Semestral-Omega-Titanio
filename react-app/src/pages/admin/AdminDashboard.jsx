@@ -1,4 +1,5 @@
 import React from 'react';
+import MetricCard from '../../components/common/MetriCard.jsx';
 import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
@@ -6,52 +7,18 @@ const AdminDashboard = () => {
         <div className="dashboard-container">
             {/* Tarjetas resumen de metricas usando el sistema de grillas de Bootstrap */}
             <div className="row mb-4 metrics-grid">
-                
                 <div className="col-md-3 mb-3">
-                    <div className="card bg-black text-light border-secondary shadow-sm h-100 metric-card">
-                        <div className="card-body text-center">
-                            <h3 className="h6 text-secondary">Total Ventas</h3>
-                            <p className="fs-3 fw-bold metric-value">$1.450.000</p>
-                            <span className="text-success fw-bold metric-trend positive">+12% este mes</span>
-                        </div>
-                    </div>
+                    <MetricCard titulo="Total Ventas" valor="$1.450.000" textoEnlace="+12% este mes" />
                 </div>
-
                 <div className="col-md-3 mb-3">
-                    <div className="card bg-black text-light border-secondary shadow-sm h-100 metric-card">
-                        <div className="card-body text-center">
-                            <h3 className="h6 text-secondary">Juegos en Catálogo</h3>
-                            <p className="fs-3 fw-bold metric-value">6</p>
-                            {/* Reemplazamos <a> por <Link> de React Router */}
-                            <Link to="/admin/productos" className="text-decoration-none metric-link">
-                                Ver inventario &rarr;
-                            </Link>
-                        </div>
-                    </div>
+                    <MetricCard titulo="Juegos en Catálogo" valor="6" enlace="/admin/productos" textoEnlace="Ver inventario" />
                 </div>
-
                 <div className="col-md-3 mb-3">
-                    <div className="card bg-black text-light border-secondary shadow-sm h-100 metric-card">
-                        <div className="card-body text-center">
-                            <h3 className="h6 text-secondary">Usuarios Registrados</h3>
-                            <p className="fs-3 fw-bold metric-value">18</p>
-                            <Link to="/admin/usuarios" className="text-decoration-none metric-link">
-                                Ver lista &rarr;
-                            </Link>
-                        </div>
-                    </div>
+                    <MetricCard titulo="Usuarios Registrados" valor="18" enlace="/admin/usuarios" textoEnlace="Ver lista" />
                 </div>
-
                 <div className="col-md-3 mb-3">
-                    <div className="card bg-black border-danger shadow-sm h-100 metric-card alert">
-                        <div className="card-body text-center">
-                            <h3 className="h6 text-danger">Stock Crítico</h3>
-                            <p className="fs-3 fw-bold text-danger metric-value">2 Juegos</p>
-                            <span className="text-danger small metric-alert-msg">Requiere reposición</span>
-                        </div>
-                    </div>
+                    <MetricCard titulo="Stock Crítico" valor="2 Juegos" textoEnlace="Requiere reposición" esAlerta={true} />
                 </div>
-
             </div>
 
             {/* Accesos directos para gestion */}
