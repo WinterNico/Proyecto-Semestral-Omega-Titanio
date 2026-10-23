@@ -159,7 +159,7 @@ const AdminNuevoUsuario = () => {
                                     onChange={handleChange} 
                                     value={formData.run} 
                                     disabled={esEdicion}
-                                    pattern="^([0-9]{7}[0-9Kk]|[0-9]{8}[0-9Kk])$"          
+                                    pattern="^[0-9]{7,8}[0-9Kk]$"
                                     title="Formato: 12345678K o 123456789K" 
                                 />                                {errores.run && <div className="invalid-feedback">{errores.run}</div>}
                                 {esEdicion && <div className="form-text text-muted">El RUN no se puede modificar en edición</div>}
