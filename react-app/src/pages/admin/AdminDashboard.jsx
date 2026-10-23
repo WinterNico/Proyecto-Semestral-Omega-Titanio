@@ -8,19 +8,19 @@ const AdminDashboard = () => {
             <div className="row mb-4 metrics-grid">
                 
                 <div className="col-md-3 mb-3">
-                    <div className="card shadow-sm h-100 metric-card">
+                    <div className="card bg-black text-light border-secondary shadow-sm h-100 metric-card">
                         <div className="card-body text-center">
-                            <h3 className="h6 text-muted">Total Ventas</h3>
+                            <h3 className="h6 text-secondary">Total Ventas</h3>
                             <p className="fs-3 fw-bold metric-value">$1.450.000</p>
-                            <span className="text-success fw-semibold metric-trend positive">+12% este mes</span>
+                            <span className="text-success fw-bold metric-trend positive">+12% este mes</span>
                         </div>
                     </div>
                 </div>
 
                 <div className="col-md-3 mb-3">
-                    <div className="card shadow-sm h-100 metric-card">
+                    <div className="card bg-black text-light border-secondary shadow-sm h-100 metric-card">
                         <div className="card-body text-center">
-                            <h3 className="h6 text-muted">Juegos en Catálogo</h3>
+                            <h3 className="h6 text-secondary">Juegos en Catálogo</h3>
                             <p className="fs-3 fw-bold metric-value">6</p>
                             {/* Reemplazamos <a> por <Link> de React Router */}
                             <Link to="/admin/productos" className="text-decoration-none metric-link">
@@ -31,9 +31,9 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="col-md-3 mb-3">
-                    <div className="card shadow-sm h-100 metric-card">
+                    <div className="card bg-black text-light border-secondary shadow-sm h-100 metric-card">
                         <div className="card-body text-center">
-                            <h3 className="h6 text-muted">Usuarios Registrados</h3>
+                            <h3 className="h6 text-secondary">Usuarios Registrados</h3>
                             <p className="fs-3 fw-bold metric-value">18</p>
                             <Link to="/admin/usuarios" className="text-decoration-none metric-link">
                                 Ver lista &rarr;
@@ -43,7 +43,7 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="col-md-3 mb-3">
-                    <div className="card shadow-sm h-100 border-danger metric-card alert">
+                    <div className="card bg-black border-danger shadow-sm h-100 metric-card alert">
                         <div className="card-body text-center">
                             <h3 className="h6 text-danger">Stock Crítico</h3>
                             <p className="fs-3 fw-bold text-danger metric-value">2 Juegos</p>
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
                     <h2 className="h5 mb-3">Acciones Rápidas</h2>
                     {/* d-flex y gap-3 separan los botones automaticamente */}
                     <div className="d-flex flex-wrap gap-3 action-buttons">
-                        <Link to="/admin/nuevo-producto" className="btn btn-primary">
+                        <Link to="/admin/nuevo-producto" className="btn btn-success">
                             + Añadir Nuevo Producto
                         </Link>
                         <Link to="/admin/nuevo-usuario" className="btn btn-secondary">

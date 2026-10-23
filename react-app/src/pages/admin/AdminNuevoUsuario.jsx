@@ -30,18 +30,18 @@ const AdminNuevoUsuario = () => {
                 </Link>
             </header>
 
-            <div className="card shadow-sm border-0">
+            <div className="card bg-black text-light border-secondary shadow-sm">
                 <div className="card-body p-4">
                     <form onSubmit={handleSubmit}>
                         
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">RUN *</label>
-                                <input type="text" className="form-control" name="run" placeholder="Ej: 19011022K" required onChange={handleChange} />
+                                <input type="text" className="form-control bg-dark text-light border-secondary" name="run" placeholder="Ej: 19011022K" required onChange={handleChange} />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Rol *</label>
-                                <select className="form-select" name="rol" required onChange={handleChange}>
+                                <select className="form-select bg-dark text-light border-secondary" name="rol" required onChange={handleChange}>
                                     <option value="">-- Selecciona un rol --</option>
                                     <option value="Administrador">Administrador</option>
                                     <option value="Vendedor">Vendedor</option>
@@ -53,23 +53,23 @@ const AdminNuevoUsuario = () => {
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Nombre *</label>
-                                <input type="text" className="form-control" name="nombre" required onChange={handleChange} />
+                                <input type="text" className="form-control bg-dark text-light border-secondary" name="nombre" required onChange={handleChange} />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Apellidos *</label>
-                                <input type="text" className="form-control" name="apellidos" required onChange={handleChange} />
+                                <input type="text" className="form-control bg-dark text-light border-secondary" name="apellidos" required onChange={handleChange} />
                             </div>
                         </div>
 
                         <div className="mb-3">
                             <label className="form-label fw-bold">Correo Electrónico *</label>
-                            <input type="email" className="form-control" name="email" placeholder="@duoc.cl" required onChange={handleChange} />
+                            <input type="email" className="form-control bg-dark text-light border-secondary" name="email" placeholder="@duoc.cl" required onChange={handleChange} />
                         </div>
 
                         <div className="row mb-4">
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Región *</label>
-                                <select className="form-select" name="region" required onChange={handleChange}>
+                                <select className="form-select bg-dark text-light border-secondary" name="region" required onChange={handleChange}>
                                     <option value="">-- Selecciona --</option>
                                     <option value="metropolitana">Región Metropolitana</option>
                                     <option value="nuble">Región de Ñuble</option>
@@ -77,7 +77,7 @@ const AdminNuevoUsuario = () => {
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Comuna *</label>
-                                <select className="form-select" name="comuna" required onChange={handleChange}>
+                                <select className="form-select bg-dark text-light border-secondary" name="comuna" required onChange={handleChange}>
                                     <option value="">-- Selecciona --</option>
                                     <option value="santiago">Santiago</option>
                                     <option value="linares">Linares</option>
@@ -87,7 +87,7 @@ const AdminNuevoUsuario = () => {
 
                         <div className="d-flex justify-content-end gap-2 border-top pt-3">
                             <Link to="/admin/usuarios" className="btn btn-outline-secondary">Cancelar</Link>
-                            <button type="submit" className="btn btn-primary px-4">Guardar Usuario</button>
+                            <button type="submit" className="btn btn-success px-4">Guardar Usuario</button>
                         </div>
                     </form>
                 </div>

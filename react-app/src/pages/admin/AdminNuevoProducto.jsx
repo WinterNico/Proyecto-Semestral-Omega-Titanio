@@ -34,18 +34,18 @@ const AdminNuevoProducto = () => {
                 </Link>
             </header>
 
-            <div className="card shadow-sm border-0">
+            <div className="card bg-black text-light border-secondary shadow-sm">
                 <div className="card-body p-4">
                     <form onSubmit={handleSubmit} className="form-standard">
                         
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Código de Producto *</label>
-                                <input type="text" className="form-control" name="codigo" placeholder="Ej: GAME-101" minLength="3" required onChange={handleChange} />
+                                <input type="text" className="form-control bg-dark text-light border-secondary" name="codigo" placeholder="Ej: GAME-101" minLength="3" required onChange={handleChange} />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Nombre del Producto *</label>
-                                <input type="text" className="form-control" name="nombre" placeholder="Ej: Monster Hunter Wilds" maxLength="100" required onChange={handleChange} />
+                                <input type="text" className="form-control bg-dark text-light border-secondary" name="nombre" placeholder="Ej: Monster Hunter Wilds" maxLength="100" required onChange={handleChange} />
                             </div>
                         </div>
 
@@ -57,11 +57,11 @@ const AdminNuevoProducto = () => {
                         <div className="row mb-3">
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Precio ($ CLP) *</label>
-                                <input type="number" className="form-control" name="precio" placeholder="Ej: 39990" min="0" required onChange={handleChange} />
+                                <input type="number" className="form-control bg-dark text-light border-secondary" name="precio" placeholder="Ej: 39990" min="0" required onChange={handleChange} />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Categoría *</label>
-                                <select className="form-select" name="categoria" required onChange={handleChange}>
+                                <select className="form-select bg-dark text-light border-secondary" name="categoria" required onChange={handleChange}>
                                     <option value="">-- Selecciona una categoría --</option>
                                     <option value="accion">Acción / Aventura</option>
                                     <option value="rpg">Rol / RPG</option>
@@ -74,17 +74,17 @@ const AdminNuevoProducto = () => {
                         <div className="row mb-4">
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Stock Total *</label>
-                                <input type="number" className="form-control" name="stock" placeholder="Ej: 50" min="0" required onChange={handleChange} />
+                                <input type="number" className="form-control bg-dark text-light border-secondary" name="stock" placeholder="Ej: 50" min="0" required onChange={handleChange} />
                             </div>
                             <div className="col-md-6">
                                 <label className="form-label fw-bold">Stock Crítico</label>
-                                <input type="number" className="form-control" name="stockCritico" placeholder="Ej: 5" min="0" onChange={handleChange} />
+                                <input type="number" className="form-control bg-dark text-light border-secondary" name="stockCritico" placeholder="Ej: 5" min="0" onChange={handleChange} />
                             </div>
                         </div>
 
                         <div className="d-flex justify-content-end gap-2 border-top pt-3">
                             <Link to="/admin/productos" className="btn btn-outline-secondary">Cancelar</Link>
-                            <button type="submit" className="btn btn-primary px-4">Guardar Producto</button>
+                            <button type="submit" className="btn btn-success px-4">Guardar Producto</button>
                         </div>
                     </form>
                 </div>

@@ -54,13 +54,13 @@ const AdminProductos = () => {
                     <h1 className="h3 mb-1">Inventario de Productos</h1>
                     <p className="text-muted mb-0">Gestiona los videojuegos disponibles en la tienda pública.</p>
                 </div>
-                <Link to="/admin/nuevo-producto" className="btn btn-primary shadow-sm">
+                <Link to="/admin/nuevo-producto" className="btn btn-success shadow-sm">
                     + Nuevo Producto
                 </Link>
             </header>
 
             <section className="admin-content">
-                <div className="table-responsive shadow-sm rounded bg-white p-3">
+                <div className="table-responsive shadow-sm rounded bg-black border border-secondary p-3">
                     <table className="table table-hover align-middle data-table" id="table-products">
                         <thead className="table-dark">
                             <tr>

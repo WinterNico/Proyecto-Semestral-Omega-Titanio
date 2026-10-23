@@ -22,14 +22,14 @@ const AdminUsuarios = () => {
                     <h1 className="h3 mb-1">Cuentas de Usuario</h1>
                     <p className="text-muted mb-0">Administración de clientes, vendedores y administradores del sistema.</p>
                 </div>
-                <Link to="/admin/nuevo-usuario" className="btn btn-primary shadow-sm">
+                <Link to="/admin/nuevo-usuario" className="btn btn-success shadow-sm">
                     + Nuevo Usuario
                 </Link>
             </header>
 
             <section className="admin-content">
-                <div className="table-responsive shadow-sm rounded bg-white p-3">
-                    <table className="table table-hover align-middle data-table">
+                <div className="table-responsive shadow-sm rounded bg-black border border-secondary p-3">
+                    <table className="table table-dark table-hover align-middle data-table">
                         <thead className="table-dark">
                             <tr>
                                 <th>RUN</th>
