@@ -7,12 +7,31 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependencias
+node_modules/
+
+# Builds generados por Vite
+dist/
+dist-ssr/
+build/
+
+# Archivos de entorno local 
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.local
 
-# Editor directories and files
+# Testing y Reportes de Cobertura (Karma / Jasmine)
+coverage/
+.nyc_output/
+
+# Cache de Linters
+.eslintcache
+.stylelintcache
+
+# Archivos de SO y Editores
 .vscode/*
 !.vscode/extensions.json
 .idea
