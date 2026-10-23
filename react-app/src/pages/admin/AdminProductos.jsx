@@ -13,7 +13,7 @@ const AdminProductos = () => {
             precio: 39990, 
             stock: 15, 
             estadoTxt: 'Normal', 
-            estadoClase: 'badge-success' 
+            estadoClase: 'bg-success' 
         },
         { 
             id: 2, 
@@ -24,7 +24,7 @@ const AdminProductos = () => {
             precio: 0, 
             stock: 999, 
             estadoTxt: 'Ilimitado', 
-            estadoClase: 'badge-success' 
+            estadoClase: 'bg-success' 
         },
         { 
             id: 3, 
@@ -35,7 +35,7 @@ const AdminProductos = () => {
             precio: 8500, 
             stock: 2, 
             estadoTxt: 'Stock Crítico', 
-            estadoClase: 'badge-warning' 
+            estadoClase: 'bg-warning text-dark' 
         }
     ]);
 
@@ -61,7 +61,7 @@ const AdminProductos = () => {
 
             <section className="admin-content">
                 <div className="table-responsive shadow-sm rounded bg-black border border-secondary p-3">
-                    <table className="table table-hover align-middle data-table" id="table-products">
+                    <table className="table table-dark table-hover align-middle data-table" id="table-products">
                         <thead className="table-dark">
                             <tr>
                                 <th>Código</th>
