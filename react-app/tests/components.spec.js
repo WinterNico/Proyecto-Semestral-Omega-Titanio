@@ -1,58 +1,76 @@
-// Pruebas de JSX Preprocessor (Jasmine + esbuild para JSX)
-// Estas pruebas verifican que el preprocesador JSX funciona correctamente
-import React from 'react';
+// tests/components.spec.js
+import { createRoot } from 'react-dom/client';
+import { act } from 'react';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import MetricCard from '../src/components/common/MetriCard.jsx';
+import RutaProtegida from '../src/components/layout/RutaProtegida.jsx';
+import { CartProvider } from '../src/context/CartContext.jsx';
 
-// Componente simple inline para probar JSX
-const ComponentePrueba = () => {
-  return React.createElement('div', { className: 'test' }, 'Hola JSX');
-};
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
-const ComponenteConProps = ({ nombre, valor }) => {
-  return React.createElement('div', { className: 'metric-card' }, 
-    React.createElement('h3', null, nombre),
-    React.createElement('p', null, valor)
-  );
-};
+let raiz, contenedor;
+async function montar(ui) {
+  contenedor = document.createElement('div');
+  document.body.appendChild(contenedor);
+  raiz = createRoot(contenedor);
+  await act(async () => raiz.render(ui));
+  return contenedor;
+}
 
-describe('Pruebas de Preprocesador JSX (esbuild)', () => {
-
-  it('Debe transformar JSX a React.createElement (archivo se compila sin errores)', () => {
-    // Si llegamos aquí, el preprocesador funciona
-    expect(true).toBeTrue();
+describe('Componentes del panel admin', () => {
+  beforeEach(() => localStorage.clear());
+  afterEach(async () => {
+    await act(async () => raiz.unmount());
+    contenedor.remove();
   });
 
-  it('Debe crear elementos React correctamente', () => {
-    const elemento = React.createElement('div', { className: 'test' }, 'Hola');
-    expect(elemento.type).toBe('div');
-    expect(elemento.props.className).toBe('test');
-    expect(elemento.props.children).toBe('Hola');
+  describe('MetricCard (props)', () => {
+    it('muestra título y valor recibidos por props', async () => {
+      const div = await montar(<MemoryRouter><MetricCard titulo="Usuarios" valor="18" textoEnlace="ok" /></MemoryRouter>);
+      expect(div.querySelector('h3').textContent).toBe('Usuarios');
+      expect(div.querySelector('.metric-value').textContent).toBe('18');
+    });
+
+    it('renderiza un enlace con el href indicado cuando recibe "enlace"', async () => {
+      const div = await montar(<MemoryRouter><MetricCard titulo="U" valor="1" enlace="/admin/usuarios" textoEnlace="Ver" /></MemoryRouter>);
+      expect(div.querySelector('a').getAttribute('href')).toBe('/admin/usuarios');
+    });
+
+    it('aplica estilo de alerta (borde rojo) con esAlerta=true', async () => {
+      const div = await montar(<MemoryRouter><MetricCard titulo="Stock" valor="1" textoEnlace="x" esAlerta /></MemoryRouter>);
+      expect(div.querySelector('.metric-card').classList.contains('border-danger')).toBeTrue();
+      expect(div.querySelector('a')).toBeNull();
+    });
   });
 
-  it('Debe crear componentes de función', () => {
-    const elemento = React.createElement(ComponentePrueba);
-    expect(typeof elemento.type).toBe('function');
-    expect(elemento.type.name).toBe('ComponentePrueba');
-  });
-
-  it('Debe pasar props a componentes', () => {
-    const elemento = React.createElement(ComponenteConProps, { nombre: 'Test', valor: '123' });
-    expect(elemento.props.nombre).toBe('Test');
-    expect(elemento.props.valor).toBe('123');
-  });
-
-  it('Debe manejar children correctamente', () => {
-    const elemento = React.createElement('ul', null,
-      React.createElement('li', null, 'Item 1'),
-      React.createElement('li', null, 'Item 2')
+  describe('RutaProtegida (mock de sesión con spyOn)', () => {
+    const app = (
+      <MemoryRouter initialEntries={['/admin']}>
+        <CartProvider>
+          <Routes>
+            <Route element={<RutaProtegida />}>
+              <Route path="/admin" element={<p>PANEL</p>} />
+            </Route>
+            <Route path="/login" element={<p>LOGIN</p>} />
+            <Route path="/" element={<p>TIENDA</p>} />
+          </Routes>
+        </CartProvider>
+      </MemoryRouter>
     );
-    expect(elemento.type).toBe('ul');
-    expect(Array.isArray(elemento.props.children)).toBeTrue();
-    expect(elemento.props.children.length).toBe(2);
-  });
+    const conSesion = (usuario) =>
+      spyOn(localStorage, 'getItem').and.callFake((k) =>
+        k === 'omega_sesion_activa' ? JSON.stringify(usuario) : null);
 
-  it('Debe soportar React.Fragment', () => {
-    const FragmentTest = () => React.createElement(React.Fragment, null, 'a', 'b');
-    const elemento = React.createElement(FragmentTest);
-    expect(typeof elemento.type).toBe('function');
+    it('sin sesión redirige a /login', async () => {
+      expect((await montar(app)).textContent).toBe('LOGIN');
+    });
+    it('usuario cliente es enviado a la tienda', async () => {
+      conSesion({ id: 2, rol: 'cliente' });
+      expect((await montar(app)).textContent).toBe('TIENDA');
+    });
+    it('usuario admin accede al panel', async () => {
+      conSesion({ id: 1, rol: 'admin' });
+      expect((await montar(app)).textContent).toBe('PANEL');
+    });
   });
 });

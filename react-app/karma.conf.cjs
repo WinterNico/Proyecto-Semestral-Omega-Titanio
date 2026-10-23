@@ -24,18 +24,17 @@ module.exports = function(config) {
     
     // Archivos a evaluar
     files: [
-      // Archivos fuente para coverage (solo los que tienen tests: validaciones y db)
-      { pattern: 'src/utils/validaciones.js', type: 'module', included: false },
-      { pattern: 'src/data/db.js', type: 'module', included: false },
-      // Tests
-      { pattern: 'tests/**/*.spec.js', type: 'module', included: true }
+    { pattern: 'src/utils/validaciones.js', type: 'module', included: false },
+    { pattern: 'src/data/db.js', type: 'module', included: false },
+    { pattern: 'tests/admin.spec.js', type: 'module', included: true },
+    { pattern: 'tests/components.spec.js', type: 'module', included: true }
     ],
 
     // Preprocesadores
     preprocessors: {
       'src/utils/validaciones.js': ['coverage'],
       'src/data/db.js': ['coverage'],
-      'tests/**/*.spec.js': ['esbuild']
+      'tests/components.spec.js': ['esbuild'] 
     },
 
     // Configuración de esbuild para JSX y resolución de modulos (solo para tests)
@@ -53,6 +52,7 @@ module.exports = function(config) {
 
     // Configuraicion del reporte de cobertura
     coverageReporter: {
+      instrumenterOptions: { istanbul: { esModules: true } },
       dir: 'coverage/',
       reporters: [
         { type: 'html', subdir: 'html' },
