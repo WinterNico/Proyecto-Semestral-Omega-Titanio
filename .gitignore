@@ -20,3 +20,11 @@ desktop.ini
 # Por si existe log
 logs
 *.log
+
+# Para reforzar esto un poco x_x
+node_modules/
+dist/
+coverage/
+.env
+*.zip
+*.rar
