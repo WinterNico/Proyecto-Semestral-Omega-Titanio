@@ -86,7 +86,7 @@ const AdminNuevoProducto = () => {
                 stockCritico: Number(formData.stockCritico) || 5,
                 oferta: formData.oferta,
                 descuento: formData.oferta ? Number(formData.descuento) : 0,
-                imagen: formData.imagen.trim() || '/assets/img/placeholder.jpg',
+                imagen: formData.imagen.trim() || '/react-app/public/assets/img/no_imagen_producto.png',
                 capturas: formData.capturas ? formData.capturas.split(',').map(c => c.trim()).filter(c => c) : [],
                 trailer: formData.trailer.trim() || 'https://www.youtube.com/embed/zPwK-h8RHWs'
             };
