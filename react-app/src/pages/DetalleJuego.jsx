@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { db } from '../data/db.js';
 import { useCart } from '../context/CartContext.jsx';
@@ -15,6 +15,13 @@ export default function DetalleJuego() {
   const [capturaActiva, setCapturaActiva] = useState(null);
   const [confirmacion, setConfirmacion] = useState('');
 
+  // Limpia el estado visual al navegar directamente de un juego a otro.
+  useEffect(() => {
+    setCapturaActiva(null);
+    setCantidad(1);
+    setConfirmacion('');
+  }, [id]);
+
   if (!producto) {
     return (
       <div className="card bg-secondary bg-opacity-10 border-danger text-light p-5 text-center">
@@ -30,6 +37,12 @@ export default function DetalleJuego() {
       </div>
     );
   }
+
+  // Evita reutilizar el tráiler de Monster Hunter en otros juegos (incluidos datos guardados).
+  const trailerCompartido = 'https://www.youtube.com/embed/zPwK-h8RHWs';
+  const trailerUrl = String(producto.id) !== '1' && producto.trailer === trailerCompartido
+    ? null
+    : producto.trailer;
 
   const categoriaObj = categorias.find((c) => String(c.id) === String(producto.categoriaId));
   const precioFinal = calcularPrecioFinal(producto);
@@ -71,11 +84,12 @@ export default function DetalleJuego() {
                 className="w-100"
                 style={{ height: '380px', objectFit: 'cover' }}
               />
-            ) : producto.trailer ? (
+            ) : trailerUrl ? (
               <iframe
+                key={`${producto.id}-${trailerUrl}`}
                 width="100%"
                 height="380"
-                src={producto.trailer}
+                src={trailerUrl}
                 title={producto.nombre}
                 allowFullScreen
               ></iframe>
@@ -90,7 +104,7 @@ export default function DetalleJuego() {
           </div>
 
           <div className="d-flex gap-2 overflow-auto pb-2">
-            {producto.trailer && (
+            {trailerUrl && (
               <button
                 type="button"
                 className={`btn btn-sm ${!capturaActiva ? 'btn-success' : 'btn-outline-light'}`}
