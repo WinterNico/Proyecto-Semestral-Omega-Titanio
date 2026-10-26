@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { db } from '../data/db.js';
 import { useCart } from '../context/CartContext.jsx';
 import { calcularPrecioFinal, formatearCLP } from '../utils/validaciones.js';
+import ProductCard from '../components/common/ProductCard.jsx';
 
 export default function DetalleJuego() {
   const { id } = useParams();
