@@ -1,28 +1,22 @@
 // src/context/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import { db } from '../data/db.js';
+import { useAuth } from './AuthContext.jsx';
 
 const CartContext = createContext();
 const CART_KEY = 'omega_carrito';
-const SESSION_KEY = 'omega_sesion_activa';
 const LAST_ORDER_KEY = 'omega_ultima_orden';
 
 export function CartProvider({ children }) {
+  // La sesión ahora vive en AuthContext; el carrito solo la consulta
+  const { user } = useAuth();
+
   const [cart, setCart] = useState(() => {
     try {
       const raw = localStorage.getItem(CART_KEY);
       return raw ? JSON.parse(raw) : [];
     } catch {
       return [];
-    }
-  });
-
-  const [user, setUser] = useState(() => {
-    try {
-      const raw = localStorage.getItem(SESSION_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
     }
   });
 
@@ -42,18 +36,6 @@ export function CartProvider({ children }) {
       console.error('Error guardando carrito:', e);
     }
   }, [cart]);
-
-  useEffect(() => {
-    try {
-      if (user) {
-        localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-      } else {
-        localStorage.removeItem(SESSION_KEY);
-      }
-    } catch (e) {
-      console.error('Error guardando sesión:', e);
-    }
-  }, [user]);
 
   const addToCart = (product, quantity = 1) => {
     const qty = Math.max(1, Number(quantity) || 1);
@@ -93,43 +75,6 @@ export function CartProvider({ children }) {
         : i.precio;
     return acc + precioFinal * i.quantity;
   }, 0);
-
-  // Funciones de sesión conectadas a db.usuarios
-  const login = (correo, password) => {
-    const usuarios = db.usuarios.obtenerTodos();
-    const encontrado = usuarios.find(
-      (u) =>
-        (u.correo || u.email || '').toLowerCase() === correo.trim().toLowerCase() &&
-        (!u.password || u.password === password)
-    );
-    if (!encontrado) {
-      return { ok: false, error: 'Correo o contraseña incorrectos.' };
-    }
-    setUser(encontrado);
-    return { ok: true, usuario: encontrado };
-  };
-
-  const logout = () => {
-    setUser(null);
-  };
-
-  const registerUser = (datos) => {
-    const usuarios = db.usuarios.obtenerTodos();
-    const existe = usuarios.some(
-      (u) =>
-        (u.correo || '').toLowerCase() === datos.correo.trim().toLowerCase() ||
-        String(u.run || '').toUpperCase() === datos.run.trim().toUpperCase()
-    );
-    if (existe) {
-      return { ok: false, error: 'El RUN o correo ya se encuentra registrado.' };
-    }
-    const creado = db.usuarios.crear({
-      ...datos,
-      rol: 'cliente',
-    });
-    setUser(creado);
-    return { ok: true, usuario: creado };
-  };
 
   const registrarCompra = (datosCliente, simularFallo = false) => {
     const ordenesActuales = db.ordenes.obtenerTodos();
@@ -188,10 +133,6 @@ export function CartProvider({ children }) {
         clearCart,
         totalItems,
         totalPrice,
-        user,
-        login,
-        logout,
-        registerUser,
         lastOrder,
         registrarCompra,
       }}
