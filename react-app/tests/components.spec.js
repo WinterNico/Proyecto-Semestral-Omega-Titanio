@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import MetricCard from '../src/components/common/MetriCard.jsx';
 import RutaProtegida from '../src/components/layout/RutaProtegida.jsx';
 import { CartProvider } from '../src/context/CartContext.jsx';
+import { AuthProvider } from '../src/context/AuthContext.jsx';
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -43,34 +44,52 @@ describe('Componentes del panel admin', () => {
     });
   });
 
-  describe('RutaProtegida (mock de sesión con spyOn)', () => {
-    const app = (
-      <MemoryRouter initialEntries={['/admin']}>
-        <CartProvider>
-          <Routes>
-            <Route element={<RutaProtegida />}>
-              <Route path="/admin" element={<p>PANEL</p>} />
-            </Route>
-            <Route path="/login" element={<p>LOGIN</p>} />
-            <Route path="/" element={<p>TIENDA</p>} />
-          </Routes>
-        </CartProvider>
+  describe('RutaProtegida por rol (mock de sesión con spyOn)', () => {
+    const app = (ruta = '/admin') => (
+      <MemoryRouter initialEntries={[ruta]}>
+        <AuthProvider>
+          <CartProvider>
+            <Routes>
+              <Route element={<RutaProtegida roles={['admin', 'vendedor']} />}>
+                <Route path="/admin" element={<p>PANEL</p>} />
+                <Route element={<RutaProtegida roles={['admin']} />}>
+                  <Route path="/admin/usuarios" element={<p>USUARIOS</p>} />
+                </Route>
+              </Route>
+              <Route path="/login" element={<p>LOGIN</p>} />
+              <Route path="/" element={<p>TIENDA</p>} />
+            </Routes>
+          </CartProvider>
+        </AuthProvider>
       </MemoryRouter>
     );
+    // Sesión simulada: solo el usuario guardado (sin token, así no se llama al backend)
     const conSesion = (usuario) =>
       spyOn(localStorage, 'getItem').and.callFake((k) =>
-        k === 'omega_sesion_activa' ? JSON.stringify(usuario) : null);
+        k === 'omega_usuario' ? JSON.stringify(usuario) : null);
 
     it('sin sesión redirige a /login', async () => {
-      expect((await montar(app)).textContent).toBe('LOGIN');
+      expect((await montar(app())).textContent).toBe('LOGIN');
     });
     it('usuario cliente es enviado a la tienda', async () => {
       conSesion({ id: 2, rol: 'cliente' });
-      expect((await montar(app)).textContent).toBe('TIENDA');
+      expect((await montar(app())).textContent).toBe('TIENDA');
     });
     it('usuario admin accede al panel', async () => {
       conSesion({ id: 1, rol: 'admin' });
-      expect((await montar(app)).textContent).toBe('PANEL');
+      expect((await montar(app())).textContent).toBe('PANEL');
+    });
+    it('vendedor accede al panel', async () => {
+      conSesion({ id: 3, rol: 'vendedor' });
+      expect((await montar(app())).textContent).toBe('PANEL');
+    });
+    it('vendedor NO accede a usuarios y vuelve al panel', async () => {
+      conSesion({ id: 3, rol: 'vendedor' });
+      expect((await montar(app('/admin/usuarios'))).textContent).toBe('PANEL');
+    });
+    it('admin sí accede a usuarios', async () => {
+      conSesion({ id: 1, rol: 'admin' });
+      expect((await montar(app('/admin/usuarios'))).textContent).toBe('USUARIOS');
     });
   });
 });
