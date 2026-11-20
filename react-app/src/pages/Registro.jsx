@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 import {
   REGIONES_COMUNAS,
   validarCorreo,
@@ -8,7 +8,7 @@ import {
 } from '../utils/validaciones.js';
 
 export default function Registro() {
-  const { registerUser } = useCart();
+  const { registerUser } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -44,7 +44,7 @@ export default function Registro() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const err = {};
     setErrorGeneral('');
@@ -68,7 +68,7 @@ export default function Registro() {
     setErrores(err);
     if (Object.keys(err).length > 0) return;
 
-    const res = registerUser(form);
+    const res = await registerUser(form);
     if (!res.ok) {
       setErrorGeneral(res.error);
       return;

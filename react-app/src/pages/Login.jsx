@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext.jsx';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 import { validarCorreo } from '../utils/validaciones.js';
 
 export default function Login() {
-  const { login } = useCart();
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [enviando, setEnviando] = useState(false);
 
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -24,12 +26,18 @@ export default function Login() {
       return;
     }
 
-    const res = login(correo, password);
+    setEnviando(true);
+    const res = await login(correo, password);
+    setEnviando(false);
     if (!res.ok) {
       setError(res.error);
       return;
     }
-    navigate('/');
+    // Volver a donde iba, o al panel si es personal de la tienda
+    const destino =
+      location.state?.from?.pathname ||
+      (res.usuario.rol === 'cliente' ? '/' : '/admin');
+    navigate(destino, { replace: true });
   };
 
   return (
@@ -68,8 +76,8 @@ export default function Login() {
               />
             </div>
 
-            <button type="submit" className="btn btn-success w-100 mb-3">
-              Iniciar Sesión
+            <button type="submit" className="btn btn-success w-100 mb-3" disabled={enviando}>
+              {enviando ? 'Ingresando...' : 'Iniciar Sesión'}
             </button>
 
             <div className="p-2 border border-secondary rounded text-center mb-3">
@@ -96,6 +104,16 @@ export default function Login() {
                   }}
                 >
                   Cliente Gamer
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-outline-warning"
+                  onClick={() => {
+                    setCorreo('vendedor@duoc.cl');
+                    setPassword('vende123');
+                  }}
+                >
+                  Vendedor
                 </button>
               </div>
             </div>

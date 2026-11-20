@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 import {
   REGIONES_COMUNAS,
   calcularPrecioFinal,
@@ -9,7 +10,8 @@ import {
 } from '../utils/validaciones.js';
 
 export default function Checkout() {
-  const { cart, totalPrice, user, lastOrder, registrarCompra } = useCart();
+  const { cart, totalPrice, lastOrder, registrarCompra } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({

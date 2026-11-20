@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export default function Perfil() {
-  const { user, logout } = useCart();
+  const { user, logout } = useAuth();
 
   if (!user) {
     return (
