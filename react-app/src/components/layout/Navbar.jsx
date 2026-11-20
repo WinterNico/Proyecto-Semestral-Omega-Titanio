@@ -2,13 +2,19 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { formatearMontoBoleta } from '../../utils/validaciones.js';
 
 export default function Navbar() {
- const { totalItems, totalPrice, user, logout } = useCart();
- const usuarioActivo = user; 
+  const { totalItems, totalPrice } = useCart();
+  const { user: usuarioActivo, logout, tieneRol } = useAuth();
   const [busqueda, setBusqueda] = useState('');
   const navigate = useNavigate();
+
+  const cerrarSesion = () => {
+    logout();
+    navigate('/');
+  };
 
   const manejarBusqueda = (e) => {
     e.preventDefault();
@@ -113,14 +119,15 @@ export default function Navbar() {
                 <Link to="/perfil" className="btn btn-sm btn-outline-info">
                   👤 {usuarioActivo.nombre}
                 </Link>
-                {usuarioActivo.rol === 'admin' && (
-                <Link to="/admin" className="btn btn-sm btn-warning">
-                  Admin
-                </Link>
+                {/* Solo el personal de la tienda ve el acceso al panel */}
+                {tieneRol('admin', 'vendedor') && (
+                  <Link to="/admin" className="btn btn-sm btn-warning">
+                    Panel
+                  </Link>
                 )}
                 <button
                   type="button"
-                  onClick={logout}
+                  onClick={cerrarSesion}
                   className="btn btn-sm btn-outline-danger"
                 >
                   Salir

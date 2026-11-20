@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../../data/db.js';
 import { formatearCLP } from '../../utils/validaciones.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const AdminProductos = () => {
+    // El vendedor solo puede ver el inventario, no crear/editar/eliminar
+    const { esAdmin } = useAuth();
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
@@ -55,9 +58,11 @@ const AdminProductos = () => {
                     <h1 className="h3 mb-1">Inventario de Productos</h1>
                     <p className="text-muted mb-0">Gestiona los videojuegos disponibles en la tienda pública.</p>
                 </div>
-                <Link to="/admin/nuevo-producto" className="btn btn-success shadow-sm">
-                    + Nuevo Producto
-                </Link>
+                {esAdmin && (
+                    <Link to="/admin/nuevo-producto" className="btn btn-success shadow-sm">
+                        + Nuevo Producto
+                    </Link>
+                )}
             </header>
 
             {error && (
@@ -87,7 +92,7 @@ const AdminProductos = () => {
                                     <th>Precio</th>
                                     <th>Stock</th>
                                     <th>Estado Stock</th>
-                                    <th>Acciones</th>
+                                    {esAdmin && <th>Acciones</th>}
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,26 +113,28 @@ const AdminProductos = () => {
                                                 {prod.estadoTxt}
                                             </span>
                                         </td>
-                                        <td>
-                                            <div className="d-flex gap-2">
-                                                <Link to={`/admin/editar-producto/${prod.id}`} className="btn btn-sm btn-outline-secondary">
-                                                    Editar
-                                                </Link>
-                                                <button 
-                                                    type="button" 
-                                                    className="btn btn-sm btn-danger"
-                                                    onClick={() => handleEliminar(prod.id, prod.nombre)}
-                                                >
-                                                    Eliminar
-                                                </button>
-                                            </div>
-                                        </td>
+                                        {esAdmin && (
+                                            <td>
+                                                <div className="d-flex gap-2">
+                                                    <Link to={`/admin/editar-producto/${prod.id}`} className="btn btn-sm btn-outline-secondary">
+                                                        Editar
+                                                    </Link>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-sm btn-danger"
+                                                        onClick={() => handleEliminar(prod.id, prod.nombre)}
+                                                    >
+                                                        Eliminar
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        )}
                                     </tr>
                                 ))}
                                 
                                 {productos.length === 0 && (
                                     <tr>
-                                        <td colSpan="8" className="text-center py-4 text-muted">
+                                        <td colSpan={esAdmin ? 8 : 7} className="text-center py-4 text-muted">
                                             No hay productos en el inventario.
                                         </td>
                                     </tr>

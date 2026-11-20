@@ -1,20 +1,31 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useCart } from '../../context/CartContext.jsx';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext.jsx';
 
-const RutaProtegida = () => {
-    const { user, usuario, cliente } = useCart();
-    const usuarioLogueado = user || usuario || cliente;
+/**
+ * <RutaProtegida />                     → solo exige estar logueado
+ * <RutaProtegida roles={['admin']} />   → además exige uno de esos roles
+ */
+export default function RutaProtegida({ roles }) {
+  const { user, cargando } = useAuth();
+  const location = useLocation();
 
-    if (!usuarioLogueado) {
-        return <Navigate to="/login" replace />;
-    }
+  if (cargando) {
+    return (
+      <div className="d-flex justify-content-center align-items-center min-vh-100 bg-dark">
+        <div className="spinner-border text-success" role="status" />
+      </div>
+    );
+  }
 
-    if (usuarioLogueado.rol !== 'admin') {
-        return <Navigate to="/" replace />;
-    }
+  if (!user) {
+    // Se guarda a dónde quería ir, para devolverlo ahí después del login
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
 
-    return <Outlet />;
-};
+  if (roles && !roles.includes(user.rol)) {
+    // Sin permiso: el personal vuelve al panel y el cliente a la tienda
+    return <Navigate to={user.rol === 'cliente' ? '/' : '/admin'} replace />;
+  }
 
-export default RutaProtegida;
+  return <Outlet />;
+}

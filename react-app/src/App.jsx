@@ -30,6 +30,7 @@ import AdminProductos from './pages/admin/AdminProductos.jsx';
 import AdminUsuarios from './pages/admin/AdminUsuarios.jsx';
 import AdminNuevoProducto from './pages/admin/AdminNuevoProducto.jsx';
 import AdminNuevoUsuario from './pages/admin/AdminNuevoUsuario.jsx';
+import AdminOrdenes from './pages/admin/AdminOrdenes.jsx';
 
 // Componente contenedor para proteger las vistas de la tienda
 // Mantenemos todo general apartado del admin
@@ -48,16 +49,21 @@ const TiendaLayout = () => {
 export default function App() {
   return (
     <Routes>
-      {/* ZONA ADMINISTRADOR */}
-      <Route element={<RutaProtegida />}>
+      {/* ZONA ADMINISTRADOR: admin y vendedor entran al panel */}
+      <Route element={<RutaProtegida roles={['admin', 'vendedor']} />}>
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="productos" element={<AdminProductos />} />
-          <Route path="nuevo-producto" element={<AdminNuevoProducto />} />
-          <Route path="editar-producto/:id" element={<AdminNuevoProducto />} />
-          <Route path="usuarios" element={<AdminUsuarios />} />
-          <Route path="nuevo-usuario" element={<AdminNuevoUsuario />} />
-          <Route path="editar-usuario/:run" element={<AdminNuevoUsuario />} />
+          <Route path="ordenes" element={<AdminOrdenes />} />
+
+          {/* Solo admin: crear/editar productos y gestionar usuarios */}
+          <Route element={<RutaProtegida roles={['admin']} />}>
+            <Route path="nuevo-producto" element={<AdminNuevoProducto />} />
+            <Route path="editar-producto/:id" element={<AdminNuevoProducto />} />
+            <Route path="usuarios" element={<AdminUsuarios />} />
+            <Route path="nuevo-usuario" element={<AdminNuevoUsuario />} />
+            <Route path="editar-usuario/:run" element={<AdminNuevoUsuario />} />
+          </Route>
         </Route>
       </Route>
 
@@ -77,15 +83,23 @@ export default function App() {
 
         {/* Flujo de Carrito, Checkout y Boletas */}
         <Route path="/carrito" element={<Carrito />} />
-        <Route path="/checkout" element={<Checkout />} />
         <Route path="/compra-exitosa" element={<CompraExitosa />} />
         <Route path="/pago-fallido" element={<PagoFallido />} />
+
+        {/* Comprar: solo cliente o admin (igual que POST /ordenes en el backend) */}
+        <Route element={<RutaProtegida roles={['cliente', 'admin']} />}>
+          <Route path="/checkout" element={<Checkout />} />
+        </Route>
 
         {/* Autenticacion y Cuenta */}
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/mis-compras" element={<MisCompras />} />
+
+        {/* Cualquier usuario logueado */}
+        <Route element={<RutaProtegida />}>
+          <Route path="/perfil" element={<Perfil />} />
+          <Route path="/mis-compras" element={<MisCompras />} />
+        </Route>
 
         {/* Ruta 404 */}
         <Route path="*" element={<NotFound />} />
