@@ -31,6 +31,8 @@ import AdminUsuarios from './pages/admin/AdminUsuarios.jsx';
 import AdminNuevoProducto from './pages/admin/AdminNuevoProducto.jsx';
 import AdminNuevoUsuario from './pages/admin/AdminNuevoUsuario.jsx';
 import AdminOrdenes from './pages/admin/AdminOrdenes.jsx';
+import AdminOrdenDetalle from './pages/admin/AdminOrdenDetalle.jsx';
+import AdminProductoDetalle from './pages/admin/AdminProductoDetalle.jsx';
 
 // Componente contenedor para proteger las vistas de la tienda
 // Mantenemos todo general apartado del admin
@@ -54,7 +56,9 @@ export default function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="productos" element={<AdminProductos />} />
+          <Route path="productos/:id" element={<AdminProductoDetalle />} />
           <Route path="ordenes" element={<AdminOrdenes />} />
+          <Route path="ordenes/:id" element={<AdminOrdenDetalle />} />
 
           {/* Solo admin: crear/editar productos y gestionar usuarios */}
           <Route element={<RutaProtegida roles={['admin']} />}>

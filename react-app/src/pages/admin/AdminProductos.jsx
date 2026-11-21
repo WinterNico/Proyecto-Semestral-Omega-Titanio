@@ -88,7 +88,7 @@ const AdminProductos = () => {
                   <th>Precio</th>
                   <th>Stock</th>
                   <th>Estado Stock</th>
-                  {esAdmin && <th>Acciones</th>}
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
@@ -114,31 +114,38 @@ const AdminProductos = () => {
                         {prod.estadoTxt}
                       </span>
                     </td>
-                    {esAdmin && (
-                      <td>
-                        <div className="d-flex gap-2">
-                          <Link
-                            to={`/admin/editar-producto/${prod.id}`}
-                            className="btn btn-sm btn-outline-secondary"
-                          >
-                            Editar
-                          </Link>
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-danger"
-                            onClick={() => handleEliminar(prod.id, prod.nombre)}
-                          >
-                            Eliminar
-                          </button>
-                        </div>
-                      </td>
-                    )}
+                    <td>
+                      <div className="d-flex gap-2">
+                        {/* Ver detalle: admin y vendedor */}
+                        <Link to={`/admin/productos/${prod.id}`} className="btn btn-sm btn-outline-info">
+                          Ver
+                        </Link>
+                        {/* Editar y eliminar: solo admin */}
+                        {esAdmin && (
+                          <>
+                            <Link
+                              to={`/admin/editar-producto/${prod.id}`}
+                              className="btn btn-sm btn-outline-secondary"
+                            >
+                              Editar
+                            </Link>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-danger"
+                              onClick={() => handleEliminar(prod.id, prod.nombre)}
+                            >
+                              Eliminar
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </td>
                   </tr>
                 ))}
 
                 {productos.length === 0 && (
                   <tr>
-                    <td colSpan={esAdmin ? 8 : 7} className="text-center py-4 text-muted">
+                    <td colSpan="8" className="text-center py-4 text-muted">
                       No hay productos en el inventario.
                     </td>
                   </tr>

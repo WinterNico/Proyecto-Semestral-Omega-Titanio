@@ -129,6 +129,8 @@ await apiFetch('/ordenes', { method: 'POST', body: { cliente, items, simularFall
 | Admin · Productos | `GET / POST / PUT / DELETE /productos` |
 | Admin · Usuarios | `GET / POST / PUT / DELETE /usuarios`, `GET /usuarios/run/{run}` |
 | Admin · Órdenes | `GET /ordenes` |
+| Admin · Detalle de orden | `GET /ordenes/{id}` |
+| Admin · Detalle de producto | `GET /productos/{id}` |
 
 Al comprar, el frontend envía **solo el id y la cantidad** de cada producto. El precio y el descuento de stock los resuelve el backend.
 
@@ -157,7 +159,7 @@ Las rutas se protegen en `App.jsx` con el rol requerido:
 | Sin sesión entra a una ruta protegida | Va al login y, después de entrar, vuelve a la página que quería |
 | Cliente escribe `/admin` en la URL | Vuelve a la tienda |
 | Vendedor escribe `/admin/usuarios` | Vuelve al panel |
-| Vendedor en el panel | No ve el menú Usuarios ni los botones de crear, editar o eliminar |
+| Vendedor en el panel | Ve la lista y el detalle de productos y de órdenes (botón **Ver**), pero no el menú Usuarios ni los botones de crear, editar o eliminar |
 | Navbar | El botón **Panel** aparece solo para admin y vendedor |
 
 Las restricciones del frontend mejoran la experiencia, pero **la seguridad real está en el backend**: aunque alguien se salte la interfaz, la API responde 401 o 403.
@@ -178,7 +180,7 @@ react-app/
 │   │   ├── layout/             # Navbar, Footer, AdminLayout, RutaProtegida
 │   │   └── common/             # ProductCard, MetricCard
 │   ├── pages/                  # Páginas de la tienda
-│   │   └── admin/              # Dashboard, Productos, Usuarios, Órdenes
+│   │   └── admin/              # Dashboard, Productos, Usuarios, Órdenes y sus detalles
 │   ├── utils/
 │   │   └── validaciones.js     # RUN, correo, región/comuna, formato de precios
 │   └── data/
@@ -224,8 +226,8 @@ La integración con la API (login, compras, permisos por rol y renovación del t
 - Mis compras y Perfil.
 
 **Panel de administración**
-- **Admin:** dashboard con métricas reales, productos (listar, crear, editar, eliminar), usuarios (listar, crear, editar, eliminar) y órdenes.
-- **Vendedor:** dashboard, productos y órdenes en modo solo lectura.
+- **Admin:** dashboard con métricas reales, productos (listar, ver detalle, crear, editar, eliminar), usuarios (listar, crear, editar, eliminar) y órdenes (listar y ver detalle).
+- **Vendedor:** dashboard, lista y detalle de productos y de órdenes, en modo solo lectura.
 
 ---
 

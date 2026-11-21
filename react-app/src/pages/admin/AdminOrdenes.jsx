@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { apiFetch } from '../../services/http.js';
 import { formatearCLP } from '../../utils/validaciones.js';
 
@@ -36,6 +37,7 @@ export default function AdminOrdenes() {
               <th>Cliente</th>
               <th>Estado</th>
               <th className="text-end">Total</th>
+              <th className="text-center">Detalle</th>
             </tr>
           </thead>
           <tbody>
@@ -54,11 +56,16 @@ export default function AdminOrdenes() {
                   </span>
                 </td>
                 <td className="text-end">{formatearCLP(o.total)}</td>
+                <td className="text-center">
+                  <Link to={`/admin/ordenes/${o.id}`} className="btn btn-sm btn-outline-info">
+                    Ver
+                  </Link>
+                </td>
               </tr>
             ))}
             {ordenes.length === 0 && (
               <tr>
-                <td colSpan="5" className="text-center text-secondary py-4">Aún no hay órdenes</td>
+                <td colSpan="6" className="text-center text-secondary py-4">Aún no hay órdenes</td>
               </tr>
             )}
           </tbody>
