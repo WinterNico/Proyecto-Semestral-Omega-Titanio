@@ -1,16 +1,12 @@
 // src/context/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
-import { db } from '../data/db.js';
-import { useAuth } from './AuthContext.jsx';
+import { apiFetch } from '../services/http.js';
 
 const CartContext = createContext();
 const CART_KEY = 'omega_carrito';
 const LAST_ORDER_KEY = 'omega_ultima_orden';
 
 export function CartProvider({ children }) {
-  // La sesión ahora vive en AuthContext; el carrito solo la consulta
-  const { user } = useAuth();
-
   const [cart, setCart] = useState(() => {
     try {
       const raw = localStorage.getItem(CART_KEY);
@@ -76,47 +72,27 @@ export function CartProvider({ children }) {
     return acc + precioFinal * i.quantity;
   }, 0);
 
-  const registrarCompra = (datosCliente, simularFallo = false) => {
-    const ordenesActuales = db.ordenes.obtenerTodos();
-    const nroOrden = `202407${String(ordenesActuales.length + 5).padStart(2, '0')}`;
-    const codigoOrden = `ORDER${Math.floor(10000 + Math.random() * 90000)}`;
-
-    const itemsDetalle = cart.map((i) => {
-      const precioUnitario =
-        i.oferta && i.descuento
-          ? Math.round(i.precio * (1 - i.descuento / 100))
-          : i.precio;
-      return {
-        ...i,
-        precioUnitario,
-        subtotal: precioUnitario * i.quantity,
-      };
-    });
-
-    const nuevaOrden = db.ordenes.crear({
-      nroOrden,
-      codigoOrden,
-      fecha: new Date().toLocaleString('es-CL'),
-      estado: simularFallo ? 'FALLIDO' : 'EXITOSO',
-      usuarioId: user?.id || null,
+  // Envía la orden al backend (POST /ordenes); el backend calcula precios y descuenta stock
+  const registrarCompra = async (datosCliente, simularFallo = false) => {
+    const payload = {
       cliente: datosCliente,
-      items: itemsDetalle,
-      total: totalPrice,
+      items: cart.map((i) => ({ productoId: i.id, cantidad: i.quantity })),
+      simularFallo,
+    };
+
+    const nuevaOrden = await apiFetch('/ordenes', {
+      method: 'POST',
+      body: payload,
     });
 
     setLastOrder(nuevaOrden);
-    localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(nuevaOrden));
+    try {
+      localStorage.setItem(LAST_ORDER_KEY, JSON.stringify(nuevaOrden));
+    } catch (e) {
+      console.error('Error guardando última orden:', e);
+    }
 
-    if (!simularFallo) {
-      // Descontar stock en db.productos y vaciar el carrito
-      cart.forEach((item) => {
-        const prodActual = db.productos.obtenerPorId(item.id);
-        if (prodActual) {
-          db.productos.actualizar(item.id, {
-            stock: Math.max(0, Number(prodActual.stock) - Number(item.quantity)),
-          });
-        }
-      });
+    if (nuevaOrden.estado !== 'FALLIDO') {
       clearCart();
     }
 
@@ -127,13 +103,13 @@ export function CartProvider({ children }) {
     <CartContext.Provider
       value={{
         cart,
+        lastOrder,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
         totalItems,
         totalPrice,
-        lastOrder,
         registrarCompra,
       }}
     >

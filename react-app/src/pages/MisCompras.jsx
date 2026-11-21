@@ -1,9 +1,31 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '../data/db.js';
+import { apiFetch } from '../services/http.js';
 import { formatearMontoBoleta } from '../utils/validaciones.js';
 
 export default function MisCompras() {
-  const ordenes = db.ordenes.obtenerTodos();
+  const [ordenes, setOrdenes] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    apiFetch('/ordenes/mias')
+      .then(setOrdenes)
+      .catch((e) => setError(e.message || 'Error al cargar tu historial de compras.'))
+      .finally(() => setCargando(false));
+  }, []);
+
+  if (cargando) {
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-success" role="status" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="alert alert-danger">{error}</div>;
+  }
 
   return (
     <div>
@@ -25,7 +47,9 @@ export default function MisCompras() {
               <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div>
                   <strong className="text-success">Orden #{ord.nroOrden}</strong> ·{' '}
-                  <small className="text-secondary">{ord.fecha}</small>
+                  <small className="text-secondary">
+                    {ord.fecha ? new Date(ord.fecha).toLocaleString('es-CL') : ''}
+                  </small>
                 </div>
                 <span
                   className={`badge ${

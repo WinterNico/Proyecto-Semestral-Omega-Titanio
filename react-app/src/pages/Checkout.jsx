@@ -27,8 +27,9 @@ export default function Checkout() {
 
   const [errores, setErrores] = useState({});
   const [simularFallo, setSimularFallo] = useState(false);
+  const [procesando, setProcesando] = useState(false);
+  const [errorPago, setErrorPago] = useState('');
 
-  // Nota Anexo EP2 pág. 6: "Si el usuario ha iniciado sesión toda esta información se añadirá de forma automática."
   useEffect(() => {
     if (user) {
       setForm((prev) => ({
@@ -66,8 +67,9 @@ export default function Checkout() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorPago('');
     const err = {};
     if (!form.nombre.trim()) err.nombre = 'El nombre es obligatorio.';
     if (!form.apellidos.trim()) err.apellidos = 'Los apellidos son obligatorios.';
@@ -79,11 +81,18 @@ export default function Checkout() {
     setErrores(err);
     if (Object.keys(err).length > 0) return;
 
-    const orden = registrarCompra(form, simularFallo);
-    if (orden.estado === 'FALLIDO') {
-      navigate('/pago-fallido');
-    } else {
-      navigate('/compra-exitosa');
+    try {
+      setProcesando(true);
+      const orden = await registrarCompra(form, simularFallo);
+      if (orden.estado === 'FALLIDO') {
+        navigate('/pago-fallido');
+      } else {
+        navigate('/compra-exitosa');
+      }
+    } catch (e) {
+      setErrorPago(e.message || 'No se pudo procesar la compra. Intenta nuevamente.');
+    } finally {
+      setProcesando(false);
     }
   };
 
@@ -120,7 +129,13 @@ export default function Checkout() {
         </div>
       </div>
 
-      {/* Tabla de resumen (Figura 6) */}
+      {errorPago && (
+        <div className="alert alert-danger mb-4" role="alert">
+          {errorPago}
+        </div>
+      )}
+
+      {/* Tabla de resumen */}
       <div className="table-responsive mb-4">
         <table className="table table-dark align-middle">
           <thead>
@@ -294,8 +309,10 @@ export default function Checkout() {
             </label>
           </div>
 
-          <button type="submit" className="btn btn-success px-4 ms-auto">
-            Pagar ahora {formatearMontoBoleta(totalPrice)}
+          <button type="submit" className="btn btn-success px-4 ms-auto" disabled={procesando}>
+            {procesando
+              ? 'Procesando compra...'
+              : `Pagar ahora ${formatearMontoBoleta(totalPrice)}`}
           </button>
         </div>
       </form>
