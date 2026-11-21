@@ -1,11 +1,36 @@
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { db } from '../data/db.js';
+import { apiFetch } from '../services/http.js';
 import ProductCard from '../components/common/ProductCard.jsx';
 
 export default function Categorias() {
-  const productos = db.productos.obtenerTodos();
-  const categorias = db.categorias.obtenerTodos();
+  const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    Promise.all([apiFetch('/categorias'), apiFetch('/productos')])
+      .then(([cats, prods]) => {
+        setCategorias(cats);
+        setProductos(prods);
+      })
+      .catch((e) => setError(e.message || 'Error al cargar las categorías.'))
+      .finally(() => setCargando(false));
+  }, []);
+
+  if (cargando) {
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-success" role="status" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="alert alert-danger">{error}</div>;
+  }
 
   const catActivaId = searchParams.get('cat') || '';
   const categoriaSeleccionada = categorias.find(
@@ -24,7 +49,7 @@ export default function Categorias() {
         <div>
           <h1 className="h3 fw-bold text-success mb-1">Categorías de Videojuegos</h1>
           <p className="text-secondary mb-0">
-            Selecciona una categoría para explorar sus títulos disponibles (Figura 4 Anexo EP2).
+            Selecciona una categoría para explorar sus títulos disponibles.
           </p>
         </div>
         {categoriaSeleccionada && (
@@ -83,7 +108,7 @@ export default function Categorias() {
           <div className="col-12 col-sm-6 col-lg-4" key={prod.id}>
             <ProductCard
               producto={prod}
-              nombreCategoria={mapaCategorias[prod.categoriaId]}
+              nombreCategoria={prod.categoriaNombre || mapaCategorias[prod.categoriaId]}
             />
           </div>
         ))}

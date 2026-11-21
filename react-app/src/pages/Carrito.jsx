@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { db } from '../data/db.js';
+import { apiFetch } from '../services/http.js';
 import { useCart } from '../context/CartContext.jsx';
 import {
   calcularPrecioFinal,
@@ -17,49 +18,67 @@ export default function Carrito() {
     totalPrice,
   } = useCart();
   const navigate = useNavigate();
-  const catalogo = db.productos.obtenerTodos();
+
+  const [catalogo, setCatalogo] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    apiFetch('/productos')
+      .then(setCatalogo)
+      .catch((e) => setError(e.message || 'Error al cargar los productos.'))
+      .finally(() => setCargando(false));
+  }, []);
 
   return (
     <div>
       <h1 className="h3 fw-bold text-success mb-4">Carrito de Compras</h1>
 
+      {error && <div className="alert alert-danger mb-3">{error}</div>}
+
       <div className="row g-4">
-        {/* Columna izquierda: Lista rápida de productos (Figura 5 Anexo EP2) */}
+        {/* Columna izquierda: Lista rápida de productos */}
         <div className="col-12 col-lg-5">
           <div className="card bg-secondary bg-opacity-10 border-secondary text-light p-3 h-100">
             <h2 className="h5 fw-bold text-success mb-3">Lista de productos</h2>
-            <div className="row g-3">
-              {catalogo.map((prod) => (
-                <div className="col-6" key={prod.id}>
-                  <div className="card bg-dark border-secondary text-light h-100">
-                    <img
-                      src={prod.imagen || '/assets/img/steamverde.jpg'}
-                      alt={prod.nombre}
-                      className="card-img-top"
-                      style={{ height: '90px', objectFit: 'cover' }}
-                    />
-                    <div className="card-body p-2 d-flex flex-column">
-                      <strong className="small mb-1">{prod.nombre}</strong>
-                      <span className="text-success fw-bold small mb-2">
-                        {formatearCLP(calcularPrecioFinal(prod))}
-                      </span>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-dark border-secondary mt-auto"
-                        onClick={() => addToCart(prod, 1)}
-                        disabled={prod.stock <= 0}
-                      >
-                        Añadir
-                      </button>
+            {cargando ? (
+              <div className="text-center py-4">
+                <div className="spinner-border text-success" role="status" />
+              </div>
+            ) : (
+              <div className="row g-3">
+                {catalogo.map((prod) => (
+                  <div className="col-6" key={prod.id}>
+                    <div className="card bg-dark border-secondary text-light h-100">
+                      <img
+                        src={prod.imagen || '/assets/img/steamverde.jpg'}
+                        alt={prod.nombre}
+                        className="card-img-top"
+                        style={{ height: '90px', objectFit: 'cover' }}
+                      />
+                      <div className="card-body p-2 d-flex flex-column">
+                        <strong className="small mb-1">{prod.nombre}</strong>
+                        <span className="text-success fw-bold small mb-2">
+                          {formatearCLP(calcularPrecioFinal(prod))}
+                        </span>
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-dark border-secondary mt-auto"
+                          onClick={() => addToCart(prod, 1)}
+                          disabled={prod.stock <= 0}
+                        >
+                          {prod.stock > 0 ? 'Añadir' : 'Sin stock'}
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Columna derecha: Tabla del Carrito de Compras (Figura 5 Anexo EP2) */}
+        {/* Columna derecha: Tabla del Carrito de Compras */}
         <div className="col-12 col-lg-7">
           <div className="card bg-secondary bg-opacity-10 border-secondary text-light p-3">
             <h2 className="h5 fw-bold text-success mb-3">Carrito de Compras</h2>
@@ -91,6 +110,8 @@ export default function Carrito() {
                       {cart.map((item) => {
                         const unitario = calcularPrecioFinal(item);
                         const subtotal = unitario * item.quantity;
+                        const prodActual = catalogo.find((p) => String(p.id) === String(item.id));
+                        const stockMax = prodActual ? prodActual.stock : item.stock;
                         return (
                           <tr key={item.id}>
                             <td>
@@ -118,6 +139,7 @@ export default function Carrito() {
                                   type="button"
                                   className="btn btn-sm btn-outline-secondary px-2 py-0"
                                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  disabled={stockMax !== undefined && item.quantity >= stockMax}
                                 >
                                   +
                                 </button>

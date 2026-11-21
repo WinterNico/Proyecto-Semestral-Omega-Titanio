@@ -1,12 +1,25 @@
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { db } from '../data/db.js';
+import { apiFetch } from '../services/http.js';
 import ProductCard from '../components/common/ProductCard.jsx';
 import { calcularPrecioFinal } from '../utils/validaciones.js';
 
 export default function Catalogo() {
-  const productos = db.productos.obtenerTodos();
-  const categorias = db.categorias.obtenerTodos();
+  const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    Promise.all([apiFetch('/productos'), apiFetch('/categorias')])
+      .then(([prods, cats]) => {
+        setProductos(prods);
+        setCategorias(cats);
+      })
+      .catch((e) => setError(e.message || 'Error al cargar el catálogo.'))
+      .finally(() => setCargando(false));
+  }, []);
 
   const q = searchParams.get('q') || '';
   const catId = searchParams.get('categoria') || '';
@@ -23,6 +36,18 @@ export default function Catalogo() {
     }
     setSearchParams(copia);
   };
+
+  if (cargando) {
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-success" role="status" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="alert alert-danger">{error}</div>;
+  }
 
   const filtrados = productos
     .filter((p) => {
@@ -123,7 +148,7 @@ export default function Catalogo() {
             <div className="col-12 col-sm-6 col-lg-4" key={prod.id}>
               <ProductCard
                 producto={prod}
-                nombreCategoria={mapaCategorias[prod.categoriaId]}
+                nombreCategoria={prod.categoriaNombre || mapaCategorias[prod.categoriaId]}
               />
             </div>
           ))}

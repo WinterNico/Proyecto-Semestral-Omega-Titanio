@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { db } from '../data/db.js';
+import { apiFetch } from '../services/http.js';
 import { useCart } from '../context/CartContext.jsx';
 import { calcularPrecioFinal, formatearCLP } from '../utils/validaciones.js';
 import ProductCard from '../components/common/ProductCard.jsx';
@@ -9,20 +9,54 @@ export default function DetalleJuego() {
   const { id } = useParams();
   const { addToCart } = useCart();
 
-  const producto = db.productos.obtenerPorId(id);
-  const categorias = db.categorias.obtenerTodos();
+  const [producto, setProducto] = useState(null);
+  const [relacionados, setRelacionados] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [noEncontrado, setNoEncontrado] = useState(false);
+  const [error, setError] = useState('');
+
   const [cantidad, setCantidad] = useState(1);
   const [capturaActiva, setCapturaActiva] = useState(null);
   const [confirmacion, setConfirmacion] = useState('');
 
-  // Limpia el estado visual al navegar directamente de un juego a otro.
   useEffect(() => {
+    setCargando(true);
+    setNoEncontrado(false);
+    setError('');
     setCapturaActiva(null);
     setCantidad(1);
     setConfirmacion('');
+
+    Promise.all([apiFetch(`/productos/${id}`), apiFetch('/productos')])
+      .then(([prod, todos]) => {
+        setProducto(prod);
+        setRelacionados(
+          todos.filter((p) => String(p.id) !== String(prod.id)).slice(0, 4)
+        );
+      })
+      .catch((e) => {
+        if (e.status === 404) {
+          setNoEncontrado(true);
+        } else {
+          setError(e.message || 'Error al cargar el detalle del juego.');
+        }
+      })
+      .finally(() => setCargando(false));
   }, [id]);
 
-  if (!producto) {
+  if (cargando) {
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-success" role="status" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="alert alert-danger">{error}</div>;
+  }
+
+  if (noEncontrado || !producto) {
     return (
       <div className="card bg-secondary bg-opacity-10 border-danger text-light p-5 text-center">
         <h2 className="text-danger mb-3">Juego no encontrado (ID #{id})</h2>
@@ -38,18 +72,13 @@ export default function DetalleJuego() {
     );
   }
 
-  // Evita reutilizar el tráiler de Monster Hunter en otros juegos (incluidos datos guardados).
   const trailerCompartido = 'https://www.youtube.com/embed/zPwK-h8RHWs';
-  const trailerUrl = String(producto.id) !== '1' && producto.trailer === trailerCompartido
-    ? null
-    : producto.trailer;
+  const trailerUrl =
+    String(producto.id) !== '1' && producto.trailer === trailerCompartido
+      ? null
+      : producto.trailer;
 
-  const categoriaObj = categorias.find((c) => String(c.id) === String(producto.categoriaId));
   const precioFinal = calcularPrecioFinal(producto);
-  const relacionados = db.productos
-    .obtenerTodos()
-    .filter((p) => String(p.id) !== String(producto.id))
-    .slice(0, 4);
 
   const handleAgregar = (e) => {
     e.preventDefault();
@@ -113,21 +142,23 @@ export default function DetalleJuego() {
                 ▶ Tráiler
               </button>
             )}
-            {(producto.capturas || [producto.imagen]).map((imgUrl, index) => (
-              <img
-                key={index}
-                src={imgUrl}
-                alt={`Vista ${index + 1}`}
-                width="110"
-                height="65"
-                style={{
-                  objectFit: 'cover',
-                  cursor: 'pointer',
-                  border: capturaActiva === imgUrl ? '2px solid #25d366' : '1px solid #444',
-                }}
-                onClick={() => setCapturaActiva(imgUrl)}
-              />
-            ))}
+            {(producto.capturas?.length ? producto.capturas : [producto.imagen])
+              .filter(Boolean)
+              .map((imgUrl, index) => (
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt={`Vista ${index + 1}`}
+                  width="110"
+                  height="65"
+                  style={{
+                    objectFit: 'cover',
+                    cursor: 'pointer',
+                    border: capturaActiva === imgUrl ? '2px solid #25d366' : '1px solid #444',
+                  }}
+                  onClick={() => setCapturaActiva(imgUrl)}
+                />
+              ))}
           </div>
         </div>
 
@@ -136,7 +167,7 @@ export default function DetalleJuego() {
           <div className="card bg-secondary bg-opacity-10 border-secondary text-light p-4 h-100">
             <div className="mb-2">
               <span className="badge bg-info text-dark me-2">
-                {categoriaObj ? categoriaObj.nombre : 'Juego Digital'}
+                {producto.categoriaNombre || 'Juego Digital'}
               </span>
               {producto.oferta && producto.descuento > 0 && (
                 <span className="badge bg-success">Oferta -{producto.descuento}%</span>
@@ -201,16 +232,18 @@ export default function DetalleJuego() {
       </div>
 
       {/* Juegos relacionados */}
-      <section>
-        <h3 className="h5 fw-bold text-success mb-3">Productos Relacionados</h3>
-        <div className="row g-3">
-          {relacionados.map((rel) => (
-            <div className="col-6 col-md-3" key={rel.id}>
-              <ProductCard producto={rel} />
-            </div>
-          ))}
-        </div>
-      </section>
+      {relacionados.length > 0 && (
+        <section>
+          <h3 className="h5 fw-bold text-success mb-3">Productos Relacionados</h3>
+          <div className="row g-3">
+            {relacionados.map((rel) => (
+              <div className="col-6 col-md-3" key={rel.id}>
+                <ProductCard producto={rel} nombreCategoria={rel.categoriaNombre} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

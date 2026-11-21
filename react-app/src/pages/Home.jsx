@@ -1,13 +1,38 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '../data/db.js';
+import { apiFetch } from '../services/http.js';
 import { useCart } from '../context/CartContext.jsx';
 import ProductCard from '../components/common/ProductCard.jsx';
 import { calcularPrecioFinal, formatearCLP } from '../utils/validaciones.js';
 
 export default function Home() {
   const { addToCart } = useCart();
-  const productos = db.productos.obtenerTodos();
-  const categorias = db.categorias.obtenerTodos();
+  const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    Promise.all([apiFetch('/productos'), apiFetch('/categorias')])
+      .then(([prods, cats]) => {
+        setProductos(prods);
+        setCategorias(cats);
+      })
+      .catch((e) => setError(e.message || 'Error al cargar los datos de la tienda.'))
+      .finally(() => setCargando(false));
+  }, []);
+
+  if (cargando) {
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-success" role="status" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="alert alert-danger">{error}</div>;
+  }
 
   const destacado = productos[0];
   const mapaCategorias = Object.fromEntries(categorias.map((c) => [c.id, c.nombre]));
@@ -48,6 +73,7 @@ export default function Home() {
                   type="button"
                   className="btn btn-outline-light px-4"
                   onClick={() => addToCart(destacado, 1)}
+                  disabled={destacado.stock <= 0}
                 >
                   Añadir al Carrito
                 </button>
@@ -66,7 +92,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Sección de Categorías (Figura 1 del Anexo EP2) */}
+      {/* Sección de Categorías */}
       <section className="mb-5">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="h4 fw-bold text-success mb-0">Categorías</h2>
@@ -123,7 +149,7 @@ export default function Home() {
             <div className="col-12 col-sm-6 col-lg-3" key={prod.id}>
               <ProductCard
                 producto={prod}
-                nombreCategoria={mapaCategorias[prod.categoriaId]}
+                nombreCategoria={prod.categoriaNombre || mapaCategorias[prod.categoriaId]}
               />
             </div>
           ))}
